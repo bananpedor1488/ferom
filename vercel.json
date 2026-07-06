@@ -1,7 +1,5 @@
 {
   "version": 2,
-  "installCommand": "npm install",
-  "buildCommand": "node scripts/vercel-build.mjs",
   "outputDirectory": "public",
   "rewrites": [
     {
@@ -17,8 +15,8 @@
       "destination": "http://138.124.18.118/uploads/:path*"
     },
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "source": "/vendor/:path*",
+      "destination": "http://138.124.18.118/vendor/:path*"
     }
   ]
 }
