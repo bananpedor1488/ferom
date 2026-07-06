@@ -1,9 +1,16 @@
-{
-  "version": 2,
+  "outputDirectory": "public",
   "rewrites": [
     {
-      "source": "/(.*)",
-      "destination": "http://138.124.18.118/$1"
+      "source": "/api/:path*",
+      "destination": "http://138.124.18.118/api/:path*"
+    },
+    {
+      "source": "/uploads/:path*",
+      "destination": "http://138.124.18.118/uploads/:path*"
+    },
+    {
+      "source": "/vendor/:path*",
+      "destination": "http://138.124.18.118/vendor/:path*"
     }
   ]
 }
