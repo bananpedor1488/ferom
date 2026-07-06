@@ -1,0 +1,6 @@
+{
+  "name": "auth-proxy",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Vercel reverse proxy to auth backend on VPS"
+}
