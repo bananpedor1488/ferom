@@ -1,0 +1,168 @@
+/* Мой профиль — glassmorphism в стиле Ferom */
+
+.tg-profile-screen.active {
+  display: flex !important;
+  flex-direction: column;
+  min-height: 100dvh;
+  background: var(--md-sys-color-surface-container-lowest);
+}
+
+.tg-profile-scroll {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+}
+
+/* ─── Шапка ─── */
+.tg-profile-header {
+  position: relative;
+  padding: calc(12px + env(safe-area-inset-top, 0px)) 16px 32px;
+  overflow: hidden;
+}
+
+.tg-profile-header__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.tg-profile-header__bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 0%, rgba(255, 255, 255, 0.16) 0%, transparent 60%);
+}
+
+.tg-profile-header__back {
+  position: relative;
+  z-index: 2;
+  margin-left: 0;
+  margin-bottom: 4px;
+  align-self: flex-start;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: #fff;
+}
+
+.tg-profile-header__back:active {
+  background: rgba(255, 255, 255, 0.14);
+  transform: scale(0.92);
+}
+
+.tg-profile-header__main {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 8px 16px 0;
+}
+
+.tg-profile-header__avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--md-sys-color-surface) 25%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.75rem;
+  font-weight: 500;
+  color: #fff;
+  border: 3px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+.tg-profile-header__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tg-profile-header__name {
+  margin-top: 14px;
+  font-size: 1.375rem;
+  font-weight: 500;
+  line-height: 1.25;
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.tg-profile-header__status {
+  margin-top: 4px;
+  font-size: 0.9375rem;
+  color: color-mix(in srgb, #fff 88%, var(--md-sys-color-primary-container));
+}
+
+.tg-profile-header__status--online,
+.tg-profile-header__status.tg-profile-header__status--online {
+  color: #b8f5b8;
+  font-weight: 500;
+}
+
+/* ─── Карточка инфо (glass) ─── */
+.tg-profile-body {
+  padding: 12px 16px 0;
+}
+
+.tg-profile-card {
+  background: color-mix(in srgb, var(--md-sys-color-surface) 82%, transparent);
+  backdrop-filter: blur(12px) saturate(1.3);
+  -webkit-backdrop-filter: blur(12px) saturate(1.3);
+  border-radius: var(--md-sys-shape-corner-large);
+  border: 1px solid color-mix(in srgb, var(--md-sys-color-outline-variant) 40%, transparent);
+  box-shadow: var(--md-sys-elevation-1);
+  overflow: hidden;
+}
+
+.tg-profile-info-row {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 14px 16px;
+  position: relative;
+}
+
+.tg-profile-info-row + .tg-profile-info-row::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 16px;
+  right: 0;
+  height: 1px;
+  background: color-mix(in srgb, var(--md-sys-color-outline-variant) 45%, transparent);
+}
+
+.tg-profile-info-row__value {
+  display: block;
+  font-size: 1.0625rem;
+  line-height: 1.35;
+  color: var(--md-sys-color-on-surface);
+  word-break: break-word;
+  text-align: left;
+  width: 100%;
+}
+
+.tg-profile-info-row__value--link {
+  color: var(--md-sys-color-primary);
+}
+
+.tg-profile-info-row__value--link .tg-line-plain {
+  color: var(--md-sys-color-primary);
+}
+
+.tg-profile-info-row__label {
+  font-size: 0.8125rem;
+  line-height: 1.3;
+  color: var(--md-sys-color-on-surface-variant);
+  margin-top: 1px;
+}

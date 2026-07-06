@@ -1,0 +1,357 @@
+/**
+ * Ferom — навигация слоями (Telegram-style slide)
+ */
+
+.screen-layer {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(100%) translateX(-50%);
+  width: 100%;
+  max-width: var(--app-max-width);
+  height: 100dvh;
+  display: flex !important;
+  flex-direction: column;
+  background: var(--md-sys-color-surface);
+  z-index: 120;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    transform 0.36s cubic-bezier(0.32, 0.72, 0, 1),
+    visibility 0.36s,
+    filter 0.36s cubic-bezier(0.32, 0.72, 0, 1);
+  will-change: transform;
+  overflow: hidden;
+}
+
+/* Экраны-слои поверх .screen { display: none } */
+.screen.screen-layer {
+  display: flex !important;
+}
+
+.screen-layer.screen-layer--visible {
+  transform: translateX(-50%);
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.screen-layer.screen-layer--under {
+  transform: translateX(calc(-50% - 28%)) scale(0.94);
+  filter: brightness(0.9);
+  pointer-events: none;
+}
+
+.screen-layer.screen-layer--closing {
+  transform: translateX(100%) translateX(-50%);
+  visibility: visible;
+  pointer-events: none;
+}
+
+body.has-layers {
+  overflow: hidden;
+}
+
+/* Tab bar и FAB только на главном экране — скрываем при чате, профиле, настройках */
+body.has-layers .floating-nav-wrap,
+body.has-layers .fab,
+body.search-open .floating-nav-wrap,
+body.search-open .fab {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none !important;
+}
+
+body.has-layers .floating-nav-wrap,
+body.search-open .floating-nav-wrap {
+  transform: translateX(-50%) translateY(calc(100% + 32px));
+}
+
+body.has-layers .fab,
+body.search-open .fab {
+  transform: scale(0.88) translateY(28px);
+  box-shadow: none;
+}
+
+/* ─── Меню сообщения (Telegram-style) ─── */
+.message-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.message-menu.is-open {
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.message-menu__backdrop {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--md-sys-color-scrim) 45%, transparent);
+  opacity: 0;
+  transition: opacity 0.28s ease;
+}
+
+.message-menu.is-open .message-menu__backdrop {
+  opacity: 1;
+}
+
+.message-menu__panel {
+  position: relative;
+  width: 100%;
+  max-width: var(--app-max-width);
+  padding: 12px 16px calc(16px + env(safe-area-inset-bottom, 0px));
+  transform: translateY(110%);
+  transition: transform 0.36s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.message-menu.is-open .message-menu__panel {
+  transform: translateY(0);
+}
+
+.message-menu__reactions {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  border-radius: var(--md-sys-shape-corner-extra-large);
+  background: color-mix(in srgb, var(--md-sys-color-surface-container-highest) 92%, transparent);
+  border: 1px solid color-mix(in srgb, var(--md-sys-color-outline-variant) 35%, transparent);
+  box-shadow: var(--md-sys-elevation-3);
+  backdrop-filter: blur(16px);
+}
+
+.message-menu__reaction {
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  font-size: 1.75rem;
+  transition: transform 0.2s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+.message-menu__reaction:active {
+  transform: scale(1.25);
+}
+
+.message-menu__preview-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+  animation: message-menu-pop 0.32s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+}
+
+@keyframes message-menu-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.85) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.message-menu__preview {
+  max-width: 78%;
+  padding: 10px 14px;
+  border-radius: 18px;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  background: var(--md-sys-color-surface-container-high);
+  border: 1px solid color-mix(in srgb, var(--md-sys-color-outline-variant) 30%, transparent);
+  box-shadow: var(--md-sys-elevation-2);
+  word-break: break-word;
+}
+
+.message-menu__preview--mine {
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  border-color: transparent;
+}
+
+.message-menu__actions {
+  border-radius: var(--md-sys-shape-corner-large);
+  overflow: hidden;
+  background: color-mix(in srgb, var(--md-sys-color-surface-container-highest) 95%, transparent);
+  border: 1px solid color-mix(in srgb, var(--md-sys-color-outline-variant) 35%, transparent);
+  box-shadow: var(--md-sys-elevation-2);
+}
+
+.message-menu__action {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 16px 18px;
+  border: none;
+  background: transparent;
+  font: inherit;
+  font-size: 1rem;
+  color: var(--md-sys-color-on-surface);
+  text-align: left;
+  transition: background 0.15s ease;
+}
+
+.message-menu__action + .message-menu__action {
+  border-top: 1px solid color-mix(in srgb, var(--md-sys-color-outline-variant) 35%, transparent);
+}
+
+.message-menu__action:active {
+  background: color-mix(in srgb, var(--md-sys-color-on-surface) 6%, transparent);
+}
+
+.message-menu__action--danger {
+  color: var(--md-sys-color-error);
+}
+
+.message-menu__action .material-symbols-rounded {
+  font-size: 22px;
+  color: var(--md-sys-color-primary);
+}
+
+.message-menu__action--danger .material-symbols-rounded {
+  color: var(--md-sys-color-error);
+}
+
+/* ─── Ответ / закреп в чате ─── */
+.chat-reply-bar,
+.chat-pinned-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  flex-shrink: 0;
+  border-top: 1px solid color-mix(in srgb, var(--md-sys-color-outline-variant) 30%, transparent);
+  background: color-mix(in srgb, var(--md-sys-color-surface-container-high) 90%, transparent);
+  animation: slide-down-in 0.25s ease both;
+}
+
+@keyframes slide-down-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.chat-reply-bar__accent,
+.chat-pinned-bar__accent {
+  width: 3px;
+  align-self: stretch;
+  border-radius: 2px;
+  background: var(--md-sys-color-primary);
+  flex-shrink: 0;
+}
+
+.chat-reply-bar__body,
+.chat-pinned-bar__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.chat-reply-bar__title,
+.chat-pinned-bar__title {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--md-sys-color-primary);
+}
+
+.chat-reply-bar__text,
+.chat-pinned-bar__text {
+  font-size: 0.8125rem;
+  color: var(--md-sys-color-on-surface-variant);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 2px;
+}
+
+.chat-reply-bar__close,
+.chat-pinned-bar__close {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--md-sys-color-on-surface-variant);
+  flex-shrink: 0;
+}
+
+.chat-reply-bar__close:active,
+.chat-pinned-bar__close:active {
+  background: color-mix(in srgb, var(--md-sys-color-on-surface) 8%, transparent);
+}
+
+.message-bubble__reply {
+  padding: 6px 10px;
+  margin-bottom: 6px;
+  border-left: 3px solid var(--md-sys-color-primary);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--md-sys-color-primary) 10%, transparent);
+  font-size: 0.8125rem;
+}
+
+.message-bubble--mine .message-bubble__reply {
+  border-left-color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.message-bubble__reply-name {
+  font-weight: 600;
+  color: var(--md-sys-color-primary);
+  font-size: 0.75rem;
+  margin-bottom: 2px;
+}
+
+.message-bubble--mine .message-bubble__reply-name {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.message-bubble__reply-text {
+  opacity: 0.85;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.message-bubble__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.message-bubble__status {
+  font-size: 14px;
+  line-height: 1;
+  opacity: 0.75;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+}
+
+.message-bubble__status--read {
+  color: #7ecbff;
+  opacity: 1;
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+}
+
+.message-bubble--mine .message-bubble__status--read {
+  color: #b8e4ff;
+}
+
+.message-bubble__text--deleted {
+  font-style: italic;
+  opacity: 0.65;
+}

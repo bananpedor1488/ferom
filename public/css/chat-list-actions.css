@@ -1,0 +1,284 @@
+/* Свайп чатов (мобилка) + контекстное меню (десктоп) */
+
+.chat-swipe {
+  position: relative;
+  overflow: hidden;
+  contain: paint;
+  border-bottom: 1px solid color-mix(in srgb, var(--md-sys-color-outline-variant) 50%, transparent);
+  background: var(--md-sys-color-surface);
+}
+
+.chat-swipe:last-child {
+  border-bottom: none;
+}
+
+.chat-swipe__actions {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: stretch;
+  z-index: 0;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s ease;
+}
+
+.chat-swipe__actions--left {
+  left: 0;
+  width: 136px;
+}
+
+.chat-swipe__actions--right {
+  right: 0;
+  width: 88px;
+}
+
+.chat-swipe.is-swiping-left .chat-swipe__actions--left,
+.chat-swipe.is-open-left .chat-swipe__actions--left,
+.chat-swipe.is-swiping-right .chat-swipe__actions--right,
+.chat-swipe.is-open-right .chat-swipe__actions--right {
+  visibility: visible;
+  opacity: 1;
+}
+
+.chat-swipe.is-open-left .chat-swipe__actions--left,
+.chat-swipe.is-open-right .chat-swipe__actions--right {
+  pointer-events: auto;
+}
+
+.chat-swipe__btn {
+  display: grid;
+  place-items: center;
+  flex: 1;
+  min-width: 0;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  color: #fff;
+}
+
+.chat-swipe__btn .material-symbols-rounded {
+  font-size: 22px;
+  font-variation-settings: 'FILL' 1, 'wght' 500;
+}
+
+.chat-swipe__btn--pin {
+  background: var(--md-sys-color-primary);
+}
+
+.chat-swipe__btn--mute {
+  background: #546e7a;
+}
+
+.chat-swipe__delete {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  background: var(--md-sys-color-error);
+  color: #fff;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.chat-swipe__delete .material-symbols-rounded {
+  font-size: 24px;
+  font-variation-settings: 'FILL' 1, 'wght' 500;
+}
+
+.chat-swipe__delete-hint {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.chat-swipe.is-delete-armed .chat-swipe__delete {
+  background: #b3261e;
+}
+
+.chat-swipe.is-delete-armed .chat-swipe__delete-hint {
+  opacity: 1;
+}
+
+.chat-swipe__track {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  min-height: 72px;
+  background: var(--md-sys-color-surface);
+  transition: transform 0.24s cubic-bezier(0.32, 0.72, 0, 1);
+  touch-action: pan-y;
+  will-change: transform;
+  box-shadow: 0 0 0 1px var(--md-sys-color-surface);
+}
+
+.chat-swipe.is-open-right .chat-swipe__track {
+  transform: translateX(-88px);
+}
+
+.chat-swipe.is-open-left .chat-swipe__track {
+  transform: translateX(136px);
+}
+
+.chat-swipe.chat-swipe--removing {
+  pointer-events: none;
+  border-bottom-color: transparent;
+}
+
+.chat-swipe .list-item {
+  border-bottom: none;
+  background: transparent;
+}
+
+.list-item--pinned {
+  background: color-mix(in srgb, var(--md-sys-color-primary-container) 18%, var(--md-sys-color-surface));
+}
+
+.chat-swipe.is-open-left .chat-swipe__track,
+.chat-swipe.is-swiping-left .chat-swipe__track {
+  background: color-mix(in srgb, var(--md-sys-color-primary-container) 18%, var(--md-sys-color-surface));
+}
+
+.chat-swipe.is-open-left .list-item--pinned,
+.chat-swipe.is-swiping-left .list-item--pinned {
+  background: transparent;
+}
+
+.list-item--muted .list-item__badge {
+  opacity: 0.55;
+}
+
+.list-item__meta-icons {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.list-item__meta-icons .material-symbols-rounded {
+  font-size: 16px;
+  color: var(--md-sys-color-on-surface-variant);
+  font-variation-settings: 'FILL' 1, 'wght' 500;
+}
+
+.list-item__meta-icons .list-item__pin {
+  color: var(--md-sys-color-primary);
+}
+
+.chat-delete-sheet__subtitle {
+  margin: 0 0 4px;
+  padding: 0 8px 10px;
+  text-align: center;
+  font-size: 0.9375rem;
+  color: var(--md-sys-color-on-surface);
+  font-weight: 500;
+}
+
+/* Контекстное меню чата */
+.chat-context-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 450;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.chat-context-menu.is-open {
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.chat-context-menu__backdrop {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+}
+
+.chat-context-menu__panel {
+  position: fixed;
+  min-width: 220px;
+  max-width: min(280px, calc(100vw - 24px));
+  padding: 6px;
+  border-radius: 14px;
+  background: var(--md-sys-color-surface-container-high);
+  border: 1px solid color-mix(in srgb, var(--md-sys-color-outline-variant) 45%, transparent);
+  box-shadow: var(--md-sys-elevation-3);
+  opacity: 0;
+  transform: scale(0.96);
+  transform-origin: top left;
+  transition: opacity 0.16s ease, transform 0.16s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.chat-context-menu.is-open .chat-context-menu__panel {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.chat-context-menu__preview {
+  padding: 10px 12px 8px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--md-sys-color-on-surface-variant);
+  border-bottom: 1px solid color-mix(in srgb, var(--md-sys-color-outline-variant) 35%, transparent);
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chat-context-menu__action {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--md-sys-color-on-surface);
+  font: inherit;
+  font-size: 0.9375rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.chat-context-menu__action:hover {
+  background: color-mix(in srgb, var(--md-sys-color-on-surface) 6%, transparent);
+}
+
+.chat-context-menu__action:active {
+  background: color-mix(in srgb, var(--md-sys-color-on-surface) 10%, transparent);
+}
+
+.chat-context-menu__action--danger {
+  color: var(--md-sys-color-error);
+}
+
+.chat-context-menu__action .material-symbols-rounded {
+  font-size: 20px;
+  font-variation-settings: 'FILL' 0, 'wght' 400;
+}
+
+.chat-context-menu__action--danger .material-symbols-rounded {
+  font-variation-settings: 'FILL' 1, 'wght' 500;
+}
+
+@media (min-width: 1024px) {
+  .chat-swipe__track {
+    touch-action: auto;
+  }
+
+  .chat-swipe__actions {
+    display: none;
+  }
+}

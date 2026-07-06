@@ -1,0 +1,941 @@
+/**
+ * Ferom — Desktop layout (Telegram Desktop style)
+ * 3-column: rail | chat list | chat (+ optional info panel)
+ */
+
+@media (min-width: 1024px) {
+  :root {
+    --desktop-rail-w: 72px;
+    --desktop-sidebar-w: 340px;
+    --desktop-info-w: 360px;
+  }
+
+  body.desktop-mode {
+    overflow: hidden;
+    display: block;
+    background: var(--md-sys-color-surface-container-low);
+  }
+
+  /* ─── Shell ─── */
+  body.desktop-mode .desktop-shell {
+    display: grid;
+    grid-template-columns: var(--desktop-rail-w) minmax(0, 1fr);
+    height: 100dvh;
+    width: 100%;
+  }
+
+  body.desktop-mode:not(.desktop-authenticated) .desktop-shell {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  body.desktop-mode .desktop-workspace {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    height: 100dvh;
+    overflow: hidden;
+    background: var(--md-sys-color-surface);
+  }
+
+  /* ─── Left icon rail ─── */
+  body.desktop-mode .desktop-rail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    height: 100dvh;
+    padding: 12px 0 16px;
+    background: color-mix(in srgb, var(--md-sys-color-surface-container) 88%, #000 12%);
+    border-right: 1px solid color-mix(in srgb, var(--md-sys-color-outline-variant) 55%, transparent);
+    z-index: 20;
+  }
+
+  body.desktop-mode .desktop-rail[hidden] {
+    display: none !important;
+  }
+
+  .desktop-rail__brand {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+    margin-bottom: 8px;
+    flex-shrink: 0;
+  }
+
+  .desktop-rail__brand .material-symbols-rounded {
+    font-size: 24px;
+  }
+
+  .desktop-rail__nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+    width: 100%;
+    padding: 0 8px;
+  }
+
+  .desktop-rail__item {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--md-sys-color-on-surface-variant);
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .desktop-rail__item:hover {
+    background: color-mix(in srgb, var(--md-sys-color-on-surface) 6%, transparent);
+  }
+
+  .desktop-rail__item.active {
+    color: var(--md-sys-color-primary);
+    background: color-mix(in srgb, var(--md-sys-color-primary) 14%, transparent);
+  }
+
+  .desktop-rail__item.active .material-symbols-rounded {
+    font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+  }
+
+  .desktop-rail__item[data-tab="wallet"] .material-symbols-rounded {
+    color: #ec4899;
+  }
+
+  .desktop-rail__item[data-tab="wallet"].active .material-symbols-rounded {
+    color: #db2777;
+  }
+
+  .desktop-rail__badge {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 9px;
+    background: var(--md-sys-color-error);
+    color: var(--md-sys-color-on-error);
+    font-size: 0.625rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  .desktop-rail__search {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--md-sys-color-on-surface-variant);
+    flex-shrink: 0;
+    margin-top: auto;
+  }
+
+  .desktop-rail__search:hover {
+    background: color-mix(in srgb, var(--md-sys-color-on-surface) 6%, transparent);
+    color: var(--md-sys-color-primary);
+  }
+
+  /* ─── App shell ─── */
+  body.desktop-mode #app {
+    max-width: none;
+    width: 100%;
+    margin: 0;
+    min-height: 0;
+    height: 100dvh;
+    box-shadow: none;
+    border: none;
+    overflow: hidden;
+    position: relative;
+  }
+
+  body.desktop-mode:not(.desktop-authenticated) #app {
+    display: block;
+    max-width: none;
+    width: 100%;
+    margin: 0;
+    height: 100dvh;
+    min-height: 100dvh;
+    background: var(--md-sys-color-surface);
+    box-shadow: none;
+    border: none;
+    overflow: hidden;
+  }
+
+  body.desktop-mode:not(.desktop-authenticated) .desktop-workspace {
+    height: 100dvh;
+  }
+
+  body.desktop-mode:not(.desktop-authenticated) #screen-login.active,
+  body.desktop-mode:not(.desktop-authenticated) #screen-register.active {
+    width: 100%;
+    max-width: none;
+    min-height: 100dvh;
+    height: 100dvh;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+    overflow: hidden;
+  }
+
+  body.desktop-mode:not(.desktop-authenticated) #screen-profile-setup.active {
+    width: 100%;
+    max-width: 560px;
+    margin: 0 auto;
+    min-height: 100dvh;
+    height: 100dvh;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+    overflow-y: auto;
+  }
+
+  body.desktop-mode.desktop-authenticated #screen-main.active {
+    display: flex !important;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Chat list sidebar — колонка слева */
+  body.desktop-mode.desktop-tab-chats #tab-chats.active {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: var(--desktop-sidebar-w);
+    height: 100%;
+    z-index: 6;
+    display: flex !important;
+    flex-direction: column;
+    min-height: 0;
+    border-right: 1px solid color-mix(in srgb, var(--md-sys-color-outline-variant) 45%, transparent);
+    background: var(--md-sys-color-surface);
+  }
+
+  body.desktop-mode.desktop-tab-chats .chats-sidebar {
+    height: 100%;
+  }
+
+  body.desktop-mode.desktop-tab-chats .chats-sidebar__header {
+    padding: 14px 10px 12px 16px;
+    min-height: 56px;
+  }
+
+  body.desktop-mode.desktop-tab-chats .chats-sidebar__title {
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+
+  body.desktop-mode.desktop-tab-chats .chats-sidebar__scroll {
+    padding-bottom: 0;
+  }
+
+  body.desktop-mode.desktop-tab-chats .chats-sidebar__list .list-item {
+    padding: 10px 14px;
+    min-height: 68px;
+    gap: 12px;
+  }
+
+  body.desktop-mode.desktop-tab-chats .chats-sidebar__list .avatar {
+    width: 48px;
+    height: 48px;
+  }
+
+  /* Other tabs — full workspace */
+  body.desktop-mode.desktop-tab-market #tab-market.active,
+  body.desktop-mode.desktop-tab-wallet #tab-wallet.active,
+  body.desktop-mode.desktop-tab-profile #tab-profile.active {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    display: flex !important;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  body.desktop-mode.desktop-tab-market #tab-market .market-page,
+  body.desktop-mode.desktop-tab-wallet #tab-wallet .wallet-page,
+  body.desktop-mode.desktop-tab-profile #tab-profile .profile-page {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding-bottom: 24px;
+  }
+
+  body.desktop-mode .floating-nav-wrap {
+    display: none !important;
+  }
+
+  /* ─── Chat list item active ─── */
+  body.desktop-mode .chats-sidebar__list .list-item--active {
+    background: color-mix(in srgb, var(--md-sys-color-primary) 12%, transparent);
+  }
+
+  body.desktop-mode .chats-sidebar__list .list-item:hover {
+    background: color-mix(in srgb, var(--md-sys-color-on-surface) 4%, transparent);
+  }
+
+  body.desktop-mode .chats-sidebar__list .list-item--active:hover {
+    background: color-mix(in srgb, var(--md-sys-color-primary) 16%, transparent);
+  }
+
+  /* ─── Empty chat column ─── */
+  body.desktop-mode .desktop-chat-empty {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--desktop-sidebar-w);
+    right: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: color-mix(in srgb, var(--md-sys-color-surface-container-low) 70%, var(--md-sys-color-surface));
+    border-left: 1px solid color-mix(in srgb, var(--md-sys-color-outline-variant) 30%, transparent);
+  }
+
+  body.desktop-mode.desktop-info-open .desktop-chat-empty {
+    right: var(--desktop-info-w);
+  }
+
+  body.desktop-mode:not(.desktop-tab-chats) .desktop-chat-empty {
+    display: none !important;
+  }
+
+  .desktop-chat-empty__inner {
+    text-align: center;
+    max-width: 320px;
+    padding: 32px;
+  }
+
+  .desktop-chat-empty__icon {
+    font-size: 72px !important;
+    color: color-mix(in srgb, var(--md-sys-color-primary) 55%, transparent);
+    margin-bottom: 16px;
+    font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 48;
+  }
+
+  .desktop-chat-empty__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--md-sys-color-on-surface);
+  }
+
+  .desktop-chat-empty__text {
+    font-size: 0.9375rem;
+    color: var(--md-sys-color-on-surface-variant);
+    line-height: 1.5;
+  }
+
+  /* ─── Chat room (middle column) ─── */
+  body.desktop-mode #screen-chat.desktop-layer-visible {
+    display: flex !important;
+    position: absolute !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    left: var(--desktop-sidebar-w) !important;
+    right: 0 !important;
+    width: auto !important;
+    max-width: none !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    transform: none !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    z-index: 3;
+    border-left: none;
+  }
+
+  body.desktop-mode.desktop-info-open #screen-chat.desktop-layer-visible {
+    right: var(--desktop-info-w) !important;
+  }
+
+  body.desktop-mode:not(.desktop-tab-chats) #screen-chat.desktop-layer-visible {
+    left: 0 !important;
+  }
+
+  body.desktop-mode #screen-chat #chat-back {
+    display: none;
+  }
+
+  body.desktop-mode #screen-chat .top-bar--chat {
+    padding-left: 16px;
+  }
+
+  /* ─── User profile (right column) ─── */
+  body.desktop-mode #screen-user-profile.desktop-layer-visible {
+    display: flex !important;
+    position: absolute !important;
+    top: 0 !important;
+    right: 0 !important;
+    left: auto !important;
+    width: var(--desktop-info-w) !important;
+    max-width: none !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    transform: none !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    z-index: 4;
+    border-left: 1px solid color-mix(in srgb, var(--md-sys-color-outline-variant) 50%, transparent);
+    box-shadow: -4px 0 24px color-mix(in srgb, #000 6%, transparent);
+  }
+
+  body.desktop-mode #screen-user-profile .tg-profile-header__back {
+    opacity: 0.85;
+  }
+
+  /* ─── Settings overlay panels ─── */
+  body.desktop-mode #screen-privacy.desktop-layer-visible,
+  body.desktop-mode #screen-admin.desktop-layer-visible,
+  body.desktop-mode #screen-profile-edit.desktop-layer-visible,
+  body.desktop-mode #screen-my-profile.desktop-layer-visible,
+  body.desktop-mode #screen-wallet-history.desktop-layer-visible {
+    display: flex !important;
+    position: absolute !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: auto !important;
+    max-width: none !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    transform: none !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    z-index: 50;
+    background: var(--md-sys-color-surface);
+  }
+
+  body.desktop-mode.desktop-tab-chats #screen-privacy.desktop-layer-visible,
+  body.desktop-mode.desktop-tab-chats #screen-admin.desktop-layer-visible,
+  body.desktop-mode.desktop-tab-profile #screen-admin.desktop-layer-visible,
+  body.desktop-mode.desktop-tab-market #screen-admin.desktop-layer-visible,
+  body.desktop-mode.desktop-tab-wallet #screen-admin.desktop-layer-visible,
+  body.desktop-mode.desktop-tab-chats #screen-profile-edit.desktop-layer-visible,
+  body.desktop-mode.desktop-tab-chats #screen-my-profile.desktop-layer-visible,
+  body.desktop-mode.desktop-tab-chats #screen-wallet-history.desktop-layer-visible {
+    left: var(--desktop-sidebar-w) !important;
+  }
+
+  body.desktop-mode.desktop-overlay-open #screen-main {
+    pointer-events: none;
+  }
+
+  /* Disable mobile slide layers on desktop */
+  body.desktop-mode .screen-layer {
+    position: absolute !important;
+    left: auto !important;
+    transform: none !important;
+    transition: none !important;
+    filter: none !important;
+  }
+
+  body.desktop-mode.has-layers {
+    overflow: hidden;
+  }
+
+  body.desktop-mode.has-layers .desktop-rail {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  /* ─── Search in sidebar column ─── */
+  body.desktop-mode .search-sheet {
+    left: var(--desktop-rail-w);
+    width: var(--desktop-sidebar-w);
+    max-width: var(--desktop-sidebar-w);
+    transform: translateX(-110%);
+    z-index: 100;
+    box-shadow: 4px 0 24px color-mix(in srgb, #000 12%, transparent);
+  }
+
+  body.desktop-mode.search-open .search-sheet {
+    transform: translateX(0);
+  }
+
+  body.desktop-mode.search-open .desktop-rail {
+    z-index: 99;
+  }
+
+  /* ─── Overlays ─── */
+  body.desktop-mode .message-menu__panel {
+    max-width: 420px;
+  }
+
+  body.desktop-mode .action-sheet__panel {
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  body.desktop-mode .snackbar {
+    left: calc(var(--desktop-rail-w) + var(--desktop-sidebar-w) + 24px);
+    right: auto;
+    max-width: 420px;
+    transform: translateY(120%);
+  }
+
+  body.desktop-mode .snackbar.visible {
+    transform: translateY(0);
+  }
+
+  body.desktop-mode .snackbar--chat {
+    left: calc(var(--desktop-rail-w) + var(--desktop-sidebar-w) + 24px);
+  }
+
+  body.desktop-mode:not(.desktop-tab-chats) .snackbar,
+  body.desktop-mode:not(.desktop-tab-chats) .snackbar--chat {
+    left: calc(var(--desktop-rail-w) + 24px);
+  }
+
+  /* Scroll padding without mobile nav */
+  body.desktop-mode #screen-main.active {
+    height: 100%;
+    min-height: 0;
+  }
+
+  body.desktop-mode #screen-main .scroll-under-nav {
+    padding-bottom: 24px;
+  }
+
+  body.desktop-mode .screen--full {
+    min-height: 0;
+    height: 100%;
+  }
+
+  body.desktop-mode .tab-panel.active {
+    animation: none;
+  }
+
+  body.desktop-mode .tg-profile-scroll,
+  body.desktop-mode .privacy-page,
+  body.desktop-mode .wallet-history-page,
+  body.desktop-mode .tg-edit-body {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --desktop-sidebar-w: 380px;
+    --desktop-info-w: 400px;
+  }
+}
+
+/* ─── Inventory grid (desktop) ─── */
+@media (min-width: 1024px) {
+  body.desktop-mode #market-inventory {
+    padding: 0 20px 28px;
+  }
+
+  body.desktop-mode #market-inventory .inventory-tags-hint {
+    margin: 0 0 14px;
+  }
+
+  body.desktop-mode #market-inventory .inventory-group + .inventory-group {
+    margin-top: 4px;
+  }
+
+  body.desktop-mode #market-inventory .inventory-group__title {
+    padding: 0;
+    margin: 18px 0 10px;
+    font-size: 0.6875rem;
+    letter-spacing: 0.06em;
+  }
+
+  body.desktop-mode #market-inventory .inventory-group__title:first-child {
+    margin-top: 0;
+  }
+
+  body.desktop-mode #market-inventory .inventory-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+    gap: 10px;
+    padding: 0;
+  }
+
+  body.desktop-mode #market-inventory .inventory-item {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 8px;
+    gap: 6px;
+    min-height: 0;
+    text-align: center;
+  }
+
+  body.desktop-mode #market-inventory .inventory-item__thumb {
+    width: 100%;
+    aspect-ratio: 1;
+    min-height: 0;
+    display: flex;
+    align-items: stretch;
+  }
+
+  body.desktop-mode #market-inventory .inventory-item__icon,
+  body.desktop-mode #market-inventory .inventory-collectible-icon {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    border-radius: 10px;
+    font-size: clamp(0.5625rem, 1.2vw, 0.75rem);
+  }
+
+  body.desktop-mode #market-inventory .inventory-collectible-icon .collectible-tag-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 4px;
+  }
+
+  body.desktop-mode #market-inventory .inventory-collectible-icon .collectible-username {
+    font-size: clamp(0.625rem, 1.1vw, 0.8125rem);
+    word-break: break-all;
+    line-height: 1.15;
+    text-align: center;
+  }
+
+  body.desktop-mode #market-inventory .inventory-item__icon .material-symbols-rounded {
+    font-size: 28px;
+  }
+
+  body.desktop-mode #market-inventory .inventory-tile__badge {
+    display: block;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    z-index: 2;
+    font-size: 0.5625rem;
+    font-weight: 700;
+    line-height: 1;
+    padding: 3px 5px;
+    border-radius: 5px;
+    background: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+    pointer-events: none;
+  }
+
+  body.desktop-mode #market-inventory .inventory-tile__badge--star {
+    top: auto;
+    bottom: 4px;
+    left: 4px;
+    right: auto;
+    background: color-mix(in srgb, var(--md-sys-color-primary-container) 90%, transparent);
+    color: var(--md-sys-color-on-primary-container);
+  }
+
+  body.desktop-mode #market-inventory .inventory-tile__badge--sale {
+    top: auto;
+    bottom: 4px;
+    right: 4px;
+    background: #db2777;
+    color: #fff;
+  }
+
+  body.desktop-mode #market-inventory .inventory-item__body {
+    flex: 0 0 auto;
+    min-width: 0;
+    width: 100%;
+  }
+
+  body.desktop-mode #market-inventory .inventory-item__title {
+    font-size: 0.6875rem;
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  body.desktop-mode #market-inventory .inventory-item__slug-label {
+    display: none;
+  }
+
+  body.desktop-mode #market-inventory .inventory-item__meta {
+    font-size: 0.5625rem;
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: 0.85;
+  }
+
+  body.desktop-mode #market-inventory .inventory-item__actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px;
+    width: 100%;
+    margin-top: auto;
+  }
+
+  body.desktop-mode #market-inventory .inventory-item__btn {
+    padding: 5px 7px;
+    font-size: 0.625rem;
+    flex: 1 1 calc(50% - 4px);
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  body.desktop-mode #tab-market .tile-btn-full,
+  body.desktop-mode #market-inventory .tile-btn-full {
+    display: none;
+  }
+
+  body.desktop-mode #tab-market .tile-btn-short,
+  body.desktop-mode #market-inventory .tile-btn-short {
+    display: inline;
+  }
+
+  body.desktop-mode #market-inventory .inventory-item__btn:not(:has(.tile-btn-short)) {
+    flex: 1 1 auto;
+  }
+
+  body.desktop-mode #market-inventory .rarity-pill {
+    font-size: 0.5625rem;
+    padding: 2px 5px;
+    vertical-align: middle;
+  }
+
+  body.desktop-mode #market-inventory .inventory-item--equipped {
+    box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--md-sys-color-primary) 55%, transparent);
+  }
+}
+
+@media (min-width: 1280px) {
+  body.desktop-mode #market-inventory .inventory-list {
+    grid-template-columns: repeat(auto-fill, minmax(124px, 1fr));
+    gap: 11px;
+  }
+}
+
+@media (min-width: 1600px) {
+  body.desktop-mode #market-inventory .inventory-list {
+    grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+    gap: 12px;
+  }
+}
+
+/* ─── Market shop + @ tags grid (desktop) ─── */
+@media (min-width: 1024px) {
+  body.desktop-mode #tab-market .market-segments {
+    padding: 0 20px 12px;
+    max-width: 520px;
+  }
+
+  body.desktop-mode #tab-market .market-balance-chip {
+    margin: 0 20px 12px;
+  }
+
+  body.desktop-mode #tab-market .market-section {
+    padding: 0 0 18px;
+  }
+
+  body.desktop-mode #tab-market .market-section__head {
+    padding: 0 20px;
+    margin-bottom: 10px;
+  }
+
+  body.desktop-mode #tab-market .market-section__title {
+    font-size: 1rem;
+  }
+
+  body.desktop-mode #tab-market .market-section__subtitle,
+  body.desktop-mode #tab-market .market-subsection__hint {
+    font-size: 0.75rem;
+  }
+
+  body.desktop-mode #tab-market .market-subsection {
+    padding: 0 20px 14px;
+  }
+
+  body.desktop-mode #tab-market .market-subsection__title {
+    font-size: 0.8125rem;
+    margin-bottom: 4px;
+  }
+
+  body.desktop-mode #tab-market .market-grid,
+  body.desktop-mode #tab-market .market-grid--premium,
+  body.desktop-mode #tab-market .collectible-grid {
+    grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+    gap: 10px;
+    padding: 0 20px 4px;
+  }
+
+  body.desktop-mode #tab-market .market-card,
+  body.desktop-mode #tab-market .collectible-card {
+    text-align: center;
+    min-height: 0;
+  }
+
+  body.desktop-mode #tab-market .market-card__preview {
+    height: auto;
+    aspect-ratio: 1;
+    min-height: 0;
+  }
+
+  body.desktop-mode #tab-market .market-card__preview .material-symbols-rounded {
+    font-size: clamp(24px, 2.5vw, 32px);
+  }
+
+  body.desktop-mode #tab-market .market-card__premium-badge {
+    font-size: 0.5rem;
+    padding: 2px 5px;
+    top: 4px;
+    left: 4px;
+  }
+
+  body.desktop-mode #tab-market .market-card__badge {
+    top: 4px;
+    right: 4px;
+    padding: 2px 5px;
+    font-size: 0.5625rem;
+  }
+
+  body.desktop-mode #tab-market .market-card__body,
+  body.desktop-mode #tab-market .collectible-card__body {
+    padding: 8px;
+    gap: 4px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+  }
+
+  body.desktop-mode #tab-market .market-card__title {
+    font-size: 0.6875rem;
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  body.desktop-mode #tab-market .market-card__desc {
+    display: none;
+  }
+
+  body.desktop-mode #tab-market .market-card__footer,
+  body.desktop-mode #tab-market .collectible-card__footer {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    margin-top: auto;
+    width: 100%;
+  }
+
+  body.desktop-mode #tab-market .market-card__price {
+    font-size: 0.625rem;
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+
+  body.desktop-mode #tab-market .market-card__owned-label {
+    font-size: 0.625rem;
+    width: 100%;
+    text-align: center;
+  }
+
+  body.desktop-mode #tab-market .market-card__action {
+    padding: 5px 7px;
+    font-size: 0.625rem;
+    flex: 1 1 calc(50% - 4px);
+    min-width: 0;
+  }
+
+  body.desktop-mode #tab-market .market-card__footer:has(.market-card__action:only-of-type) .market-card__action {
+    flex: 1 1 100%;
+  }
+
+  body.desktop-mode #tab-market .collectible-card__hero {
+    flex: 1;
+    aspect-ratio: 1;
+    min-height: 0;
+    padding: 8px;
+    justify-content: center;
+  }
+
+  body.desktop-mode #tab-market .collectible-card__handle {
+    font-size: clamp(0.625rem, 1.1vw, 0.875rem);
+  }
+
+  body.desktop-mode #tab-market .collectible-card__handle .collectible-username {
+    font-size: inherit;
+    word-break: break-all;
+    line-height: 1.15;
+  }
+
+  body.desktop-mode #tab-market .collectible-card__rarity {
+    top: 4px;
+    right: 4px;
+  }
+
+  body.desktop-mode #tab-market .collectible-card__rarity .rarity-pill {
+    font-size: 0.5625rem;
+    padding: 2px 5px;
+  }
+
+  body.desktop-mode #tab-market .collectible-card__owner {
+    font-size: 0.5625rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: 0.8;
+  }
+
+  body.desktop-mode #tab-market .market-tags-bar {
+    padding: 0 20px 12px;
+    gap: 10px;
+  }
+
+  body.desktop-mode #tab-market .market-mint-btn--prominent {
+    font-size: 0.8125rem;
+    padding: 8px 12px;
+  }
+
+  body.desktop-mode #tab-market #market-tags-listings {
+    padding: 0;
+  }
+
+  body.desktop-mode #tab-market .collectible-info-banner {
+    margin: 0 20px 12px;
+  }
+}
+
+@media (min-width: 1280px) {
+  body.desktop-mode #tab-market .market-grid,
+  body.desktop-mode #tab-market .market-grid--premium,
+  body.desktop-mode #tab-market .collectible-grid {
+    grid-template-columns: repeat(auto-fill, minmax(124px, 1fr));
+    gap: 11px;
+  }
+}
+
+@media (min-width: 1600px) {
+  body.desktop-mode #tab-market .market-grid,
+  body.desktop-mode #tab-market .market-grid--premium,
+  body.desktop-mode #tab-market .collectible-grid {
+    grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+    gap: 12px;
+  }
+}

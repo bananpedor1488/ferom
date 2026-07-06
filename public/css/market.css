@@ -1,0 +1,535 @@
+/**
+ * Ferom — маркет и инвентарь
+ */
+
+.market-page {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 24px;
+}
+
+.market-segments {
+  display: flex;
+  gap: 8px;
+  padding: 0 16px 16px;
+}
+
+.market-segment {
+  flex: 1;
+  padding: 8px 6px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--md-sys-color-outline-variant) 35%, transparent);
+  background: color-mix(in srgb, var(--md-sys-color-surface-container-high) 88%, transparent);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--md-sys-color-on-surface-variant);
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.market-segment.active {
+  background: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+  border-color: transparent;
+}
+
+.market-balance-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  margin: 0 16px 16px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--md-sys-color-primary-container) 70%, transparent);
+  color: var(--md-sys-color-on-primary-container);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.market-balance-chip .material-symbols-rounded {
+  font-size: 16px;
+  font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 20;
+  color: #db2777;
+}
+
+.market-section {
+  padding: 0 16px 24px;
+}
+
+.market-section__head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.market-section__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--md-sys-color-primary) 12%, transparent);
+  color: var(--md-sys-color-primary);
+  flex-shrink: 0;
+}
+
+.market-section__icon .material-symbols-rounded {
+  font-size: 22px;
+}
+
+.market-section__title {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.market-section__subtitle {
+  font-size: 0.75rem;
+  color: var(--md-sys-color-on-surface-variant);
+  margin-top: 2px;
+}
+
+.market-subsection {
+  margin-top: 18px;
+}
+
+.market-subsection + .market-subsection {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid color-mix(in srgb, var(--md-sys-color-outline-variant) 35%, transparent);
+}
+
+.market-subsection__title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--md-sys-color-on-surface);
+  margin: 0 0 4px;
+}
+
+.market-subsection__hint {
+  font-size: 0.75rem;
+  color: var(--md-sys-color-on-surface-variant);
+  margin: 0 0 12px;
+}
+
+.market-subsection__empty {
+  font-size: 0.8125rem;
+  color: var(--md-sys-color-on-surface-variant);
+  padding: 12px 0;
+}
+
+.market-grid--premium {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.market-card--premium-style {
+  border-color: color-mix(in srgb, #a855f7 22%, transparent);
+}
+
+.market-card__premium-badge {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #7c3aed, #db2777);
+  color: #fff;
+  z-index: 2;
+}
+
+.market-card__preview--premium-style .material-symbols-rounded {
+  opacity: 0.35;
+  color: #fff;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
+}
+
+.market-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.market-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--md-sys-shape-corner-large);
+  overflow: hidden;
+  background: color-mix(in srgb, var(--md-sys-color-surface-container-high) 92%, transparent);
+  border: 1px solid color-mix(in srgb, var(--md-sys-color-outline-variant) 28%, transparent);
+  text-align: left;
+  color: inherit;
+  padding: 0;
+}
+
+.market-card:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.market-card--owned {
+  border-color: color-mix(in srgb, var(--md-sys-color-primary) 35%, transparent);
+}
+
+.market-card--equipped {
+  box-shadow: 0 0 0 2px var(--md-sys-color-primary);
+}
+
+.market-card__preview {
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.market-card__preview .material-symbols-rounded {
+  font-size: 32px;
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+  opacity: 0.9;
+}
+
+.market-card__preview--night { background: linear-gradient(145deg, #1e1b4b, #312e81); color: #c4b5fd; }
+.market-card__preview--aurora { background: linear-gradient(145deg, #06b6d4, #8b5cf6, #f472b6); color: #fff; }
+.market-card__preview--sunset { background: linear-gradient(145deg, #ea580c, #f43f5e, #fbbf24); color: #fff; }
+.market-card__preview--classic { background: linear-gradient(145deg, #7c3aed, #a855f7); color: #fff; }
+.market-card__preview--space { background: linear-gradient(180deg, #0f172a, #1e1b4b); color: #93c5fd; }
+.market-card__preview--mesh { background: linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6); color: #fff; }
+.market-card__preview--gold { background: linear-gradient(145deg, #78350f, #fbbf24, #fef3c7); color: #fff; }
+.market-card__preview--neon { background: linear-gradient(145deg, #0a0a12, #e879f9 45%, #22d3ee); color: #fff; }
+.market-card__preview--sakura { background: linear-gradient(145deg, #fce7f3, #f472b6, #fff5f7); color: #be185d; }
+.market-card__preview--purple { background: color-mix(in srgb, #8b5cf6 18%, transparent); color: #8b5cf6; }
+.market-card__preview--teal { background: color-mix(in srgb, #14b8a6 18%, transparent); color: #14b8a6; }
+.market-card__preview--orange { background: color-mix(in srgb, #f97316 18%, transparent); color: #f97316; }
+.market-card__preview--green { background: color-mix(in srgb, #22c55e 18%, transparent); color: #22c55e; }
+.market-card__preview--ruby { background: color-mix(in srgb, #ec4899 18%, transparent); color: #ec4899; }
+.market-card__preview--blue { background: color-mix(in srgb, #3b82f6 18%, transparent); color: #3b82f6; }
+
+.market-card__badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+}
+
+.market-card__body {
+  padding: 10px 12px 12px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.market-card__title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.market-card__desc {
+  font-size: 0.6875rem;
+  color: var(--md-sys-color-on-surface-variant);
+  line-height: 1.35;
+  flex: 1;
+}
+
+.market-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.market-card__price {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #db2777;
+}
+
+.market-card__price .material-symbols-rounded {
+  font-size: 14px;
+  font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 20;
+}
+
+.market-card__action {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+}
+
+.market-card__action--secondary {
+  background: color-mix(in srgb, var(--md-sys-color-primary) 12%, transparent);
+  color: var(--md-sys-color-primary);
+}
+
+.market-card__owned-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--md-sys-color-primary);
+}
+
+/* Инвентарь */
+.inventory-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 16px 24px;
+}
+
+.inventory-group__title {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--md-sys-color-on-surface-variant);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 16px 0 10px;
+  padding: 0 16px;
+}
+
+.inventory-group__title:first-child {
+  margin-top: 0;
+}
+
+.inventory-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: var(--md-sys-shape-corner-large);
+  background: color-mix(in srgb, var(--md-sys-color-surface-container-high) 92%, transparent);
+  border: 1px solid color-mix(in srgb, var(--md-sys-color-outline-variant) 28%, transparent);
+}
+
+.inventory-item--equipped {
+  border-color: color-mix(in srgb, var(--md-sys-color-primary) 45%, transparent);
+  background: color-mix(in srgb, var(--md-sys-color-primary-container) 35%, transparent);
+}
+
+.inventory-item__icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.inventory-item__body { flex: 1; min-width: 0; }
+.inventory-item__title { font-size: 0.9375rem; font-weight: 600; }
+.inventory-item__meta { font-size: 0.75rem; color: var(--md-sys-color-on-surface-variant); margin-top: 2px; }
+
+.inventory-item__btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  flex-shrink: 0;
+}
+
+.inventory-item__btn--ghost {
+  background: transparent;
+  color: var(--md-sys-color-primary);
+}
+
+.tile-btn-full {
+  display: inline;
+}
+
+.tile-btn-short {
+  display: none;
+}
+
+.inventory-item__btn--disabled {
+  pointer-events: none;
+  opacity: 0.45;
+}
+
+.inventory-item__thumb {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.inventory-tile__badge {
+  display: none;
+}
+
+.inventory-empty {
+  padding: 48px 24px;
+  text-align: center;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.inventory-empty .material-symbols-rounded {
+  font-size: 48px;
+  opacity: 0.35;
+  display: block;
+  margin: 0 auto 12px;
+}
+
+/* Обои чата — см. chat-wallpapers.css */
+
+/* Темы приложения — базовые акценты (полная палитра в app-themes.css) */
+html[data-app-theme="theme_night_pro"] { --md-sys-color-primary: #c4b5fd; }
+html[data-app-theme="theme_aurora"] { --md-sys-color-primary: #22d3ee; }
+html[data-app-theme="theme_sunset"] { --md-sys-color-primary: #ea580c; }
+html[data-app-theme="theme_ocean"] { --md-sys-color-primary: #0284c7; }
+html[data-app-theme="theme_mint"] { --md-sys-color-primary: #059669; }
+html[data-app-theme="theme_lavender"] { --md-sys-color-primary: #7c3aed; }
+html[data-app-theme="theme_rose"] { --md-sys-color-primary: #db2777; }
+html[data-app-theme="theme_forest"] { --md-sys-color-primary: #4ade80; }
+html[data-app-theme="theme_cyber"] { --md-sys-color-primary: #22d3ee; }
+html[data-app-theme="theme_gold"] { --md-sys-color-primary: #fbbf24; }
+html[data-app-theme="theme_graphite"] { --md-sys-color-primary: #d4d4d8; }
+
+.market-card__preview--theme {
+  padding: 0;
+  overflow: hidden;
+}
+
+.market-card__preview--theme .theme-preview-swatch {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.floating-nav__item[data-tab="market"] .floating-nav__icon {
+  color: var(--md-sys-color-primary);
+}
+
+.floating-nav--four .floating-nav__label {
+  font-size: 0.625rem;
+}
+
+.floating-nav--four .floating-nav__item {
+  padding: 6px 2px;
+}
+
+.floating-nav--four .floating-nav__icon {
+  font-size: 20px !important;
+}
+
+#market-tags-view {
+  padding-bottom: 24px;
+}
+
+.market-tags-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  padding: 0 16px 12px;
+}
+
+.market-sort-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.market-mint-btn--prominent {
+  width: 100%;
+  justify-content: center;
+  padding: 12px 14px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 12px;
+  white-space: normal;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.market-sort-chip {
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--md-sys-color-outline-variant) 35%, transparent);
+  background: color-mix(in srgb, var(--md-sys-color-surface-container-high) 88%, transparent);
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.market-sort-chip.active {
+  background: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+  border-color: transparent;
+}
+
+.market-mint-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--md-sys-color-primary) 25%, transparent);
+  background: color-mix(in srgb, var(--md-sys-color-primary-container) 45%, transparent);
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--md-sys-color-on-primary-container);
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.market-mint-btn .material-symbols-rounded {
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+#market-tags-listings {
+  padding: 0 16px;
+}
+
+.inventory-tags-hint {
+  margin: 0 16px 12px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-size: 0.8125rem;
+  color: var(--md-sys-color-on-surface-variant);
+  background: color-mix(in srgb, var(--md-sys-color-surface-container-high) 80%, transparent);
+}
+
+.inventory-item__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.inventory-item--primary {
+  border-color: color-mix(in srgb, var(--md-sys-color-primary) 35%, transparent);
+}
+
+.inventory-item__primary-badge {
+  color: var(--md-sys-color-primary);
+  font-size: 0.75rem;
+}

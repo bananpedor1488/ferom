@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#6750a4">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Ferom</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0..1,0" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/app.css">
+  <link rel="stylesheet" href="/css/profile-edit.css">
+  <link rel="stylesheet" href="/css/my-profile.css">
+  <link rel="stylesheet" href="/css/transitions.css">
+  <link rel="stylesheet" href="/css/wallet.css">
+  <link rel="stylesheet" href="/css/market.css">
+  <link rel="stylesheet" href="/css/chat-wallpapers.css">
+  <link rel="stylesheet" href="/css/app-themes.css">
+  <link rel="stylesheet" href="/css/collectibles.css">
+  <link rel="stylesheet" href="/css/privacy.css">
+  <link rel="stylesheet" href="/css/desktop.css">
+  <link rel="stylesheet" href="/css/cover-pattern.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <link rel="stylesheet" href="/css/auth-desktop.css">
+  <link rel="stylesheet" href="/css/account-modal.css">
+  <link rel="stylesheet" href="/css/chat-list-actions.css">
+  <link rel="stylesheet" href="/css/profile-shared.css">
+
+  <script type="importmap">
+  {
+    "imports": {
+      "@material/web/": "/vendor/@material/web/",
+      "lit": "/vendor/lit/index.js",
+      "lit/": "/vendor/lit/",
+      "lit-html": "/vendor/lit-html/lit-html.js",
+      "lit-html/": "/vendor/lit-html/",
+      "lit-element": "/vendor/lit-element/index.js",
+      "lit-element/": "/vendor/lit-element/",
+      "@lit/": "/vendor/@lit/",
+      "tslib": "/vendor/tslib/tslib.es6.js",
+      "@capacitor/core": "/vendor/@capacitor/core/dist/index.js",
+      "@capacitor/app": "/vendor/@capacitor/app/dist/esm/index.js",
+      "@capacitor/local-notifications": "/vendor/@capacitor/local-notifications/dist/esm/index.js",
+      "@capacitor/push-notifications": "/vendor/@capacitor/push-notifications/dist/esm/index.js"
+    }
+  }
+  </script>
+</head>
+<body>
+
+  <!-- Загрузка -->
+  <div id="app-loader" class="app-loader">
+    <div class="spinner"></div>
+    <span class="text-muted">Загрузка Ferom…</span>
+  </div>
+
+  <div id="desktop-shell" class="desktop-shell">
+    <nav id="desktop-rail" class="desktop-rail" aria-label="Навигация" hidden>
+      <div class="desktop-rail__brand" title="Ferom">
+        <span class="material-symbols-rounded">forum</span>
+      </div>
+      <div class="desktop-rail__nav">
+        <button type="button" class="desktop-rail__item active" data-tab="chats" aria-label="Чаты" aria-current="page">
+          <span class="material-symbols-rounded">chat</span>
+          <span class="desktop-rail__badge hidden" id="desktop-rail-badge"></span>
+        </button>
+        <button type="button" class="desktop-rail__item" data-tab="market" aria-label="Маркет">
+          <span class="material-symbols-rounded">storefront</span>
+        </button>
+        <button type="button" class="desktop-rail__item" data-tab="wallet" aria-label="Кошелёк">
+          <span class="material-symbols-rounded">diamond</span>
+        </button>
+        <button type="button" class="desktop-rail__item" data-tab="profile" aria-label="Настройки">
+          <span class="material-symbols-rounded">settings</span>
+        </button>
+      </div>
+      <button type="button" class="desktop-rail__search ripple-host" id="desktop-rail-search" aria-label="Найти человека" title="Найти человека">
+        <span class="material-symbols-rounded">person_search</span>
+      </button>
+    </nav>
+
+    <div id="desktop-workspace" class="desktop-workspace">
+  <div id="app">
+
+    <!-- Вход -->
+    <div id="screen-login" class="screen screen--full auth-screen">
+      <div class="auth-desktop">
+        <aside class="auth-desktop__hero" aria-hidden="true">
+          <div class="auth-desktop__hero-inner">
+            <div class="auth-desktop__logo">
+              <span class="material-symbols-rounded">forum</span>
+            </div>
+            <h2 class="auth-desktop__hero-title">Ferom</h2>
+            <p class="auth-desktop__hero-text">Мессенджер с коллекционными @ тегами, рубинами и маркетом — всё в одном приложении.</p>
+            <ul class="auth-desktop__features">
+              <li><span class="material-symbols-rounded">chat</span> Быстрые чаты</li>
+              <li><span class="material-symbols-rounded">diamond</span> Кошелёк рубинов</li>
+              <li><span class="material-symbols-rounded">sell</span> Маркет тегов</li>
+            </ul>
+          </div>
+        </aside>
+        <div class="auth-desktop__panel">
+          <div class="auth-screen__brand auth-screen__brand--mobile">
+            <div class="auth-screen__logo">
+              <span class="material-symbols-rounded">forum</span>
+            </div>
+            <h1 class="auth-screen__title">Ferom</h1>
+            <p class="auth-screen__subtitle">Начни разговор, который имеет значение</p>
+          </div>
+
+          <form id="login-form" class="auth-form" novalidate>
+        <div class="form-field">
+          <label class="form-field__label" for="login-email">Email</label>
+          <input class="form-field__input" type="email" id="login-email" required autocomplete="email" placeholder="you@example.com">
+        </div>
+        <div class="form-field">
+          <label class="form-field__label" for="login-password">Пароль</label>
+          <input class="form-field__input" type="password" id="login-password" required autocomplete="current-password" placeholder="••••••••">
+        </div>
+        <p id="login-error" class="text-error hidden" role="alert"></p>
+        <button type="button" class="auth-form__hint-chip" id="login-password-reset-hint">
+          <span class="material-symbols-rounded auth-form__hint-chip-icon" aria-hidden="true">lock_reset</span>
+          <span class="auth-form__hint-chip-text">Сбросили пароль?</span>
+          <span class="material-symbols-rounded auth-form__hint-chip-chevron" aria-hidden="true">chevron_right</span>
+        </button>
+        <div class="auth-form__submit">
+          <button type="submit" class="btn btn--primary" id="login-submit">Войти</button>
+        </div>
+      </form>
+
+          <p class="auth-switch">
+            Нет аккаунта?
+            <button type="button" class="auth-switch__link" id="go-register">Регистрация</button>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Регистрация -->
+    <div id="screen-register" class="screen screen--full auth-screen">
+      <div class="auth-desktop">
+        <aside class="auth-desktop__hero" aria-hidden="true">
+          <div class="auth-desktop__hero-inner">
+            <div class="auth-desktop__logo">
+              <span class="material-symbols-rounded">person_add</span>
+            </div>
+            <h2 class="auth-desktop__hero-title">Присоединяйся</h2>
+            <p class="auth-desktop__hero-text">Создай аккаунт за минуту — email, пароль и уникальный @username.</p>
+          </div>
+        </aside>
+        <div class="auth-desktop__panel">
+          <div class="auth-screen__brand auth-screen__brand--mobile">
+            <div class="auth-screen__logo">
+              <span class="material-symbols-rounded">person_add</span>
+            </div>
+            <h1 class="auth-screen__title">Регистрация</h1>
+            <p class="auth-screen__subtitle">Создайте аккаунт Ferom</p>
+          </div>
+
+          <form id="register-form" class="auth-form" novalidate>
+        <div class="form-field">
+          <label class="form-field__label" for="register-email">Email</label>
+          <input class="form-field__input" type="email" id="register-email" required autocomplete="email" placeholder="you@example.com">
+        </div>
+        <div class="form-field">
+          <label class="form-field__label" for="register-password">Пароль</label>
+          <input class="form-field__input" type="password" id="register-password" required autocomplete="new-password" placeholder="Минимум 6 символов">
+        </div>
+        <p id="register-error" class="text-error hidden" role="alert"></p>
+        <div class="auth-form__submit">
+          <button type="submit" class="btn btn--primary" id="register-submit">Создать аккаунт</button>
+        </div>
+      </form>
+
+          <p class="auth-switch">
+            Уже есть аккаунт?
+            <button type="button" class="auth-switch__link" id="go-login">Войти</button>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Подтверждение email -->
+    <div id="screen-email-verify" class="screen screen--full auth-screen">
+      <div class="auth-desktop">
+        <aside class="auth-desktop__hero" aria-hidden="true">
+          <div class="auth-desktop__hero-inner">
+            <div class="auth-desktop__logo">
+              <span class="material-symbols-rounded">mark_email_read</span>
+            </div>
+            <h2 class="auth-desktop__hero-title">Проверка почты</h2>
+            <p class="auth-desktop__hero-text">Мы отправили 6-значный код на ваш email. Введите его, чтобы продолжить.</p>
+          </div>
+        </aside>
+        <div class="auth-desktop__panel">
+          <div class="auth-screen__brand auth-screen__brand--mobile">
+            <div class="auth-screen__logo">
+              <span class="material-symbols-rounded">mark_email_read</span>
+            </div>
+            <h1 class="auth-screen__title">Подтвердите email</h1>
+            <p class="auth-screen__subtitle">
+              Код отправлен на <span id="verify-email-display" class="verify-email-display"></span>
+              <button type="button" class="auth-switch__link verify-email-change-toggle" id="verify-email-change-toggle">Изменить</button>
+            </p>
+          </div>
+
+          <div id="verify-email-change-panel" class="verify-email-change hidden">
+            <div class="form-field">
+              <label class="form-field__label" for="verify-email-new">Новый email</label>
+              <input class="form-field__input" type="email" id="verify-email-new" autocomplete="email" placeholder="you@example.com">
+            </div>
+            <button type="button" class="btn btn--primary verify-email-change-save" id="verify-email-change-save">Сохранить и отправить код</button>
+          </div>
+
+          <form id="verify-email-form" class="auth-form" novalidate>
+            <div class="form-field">
+              <label class="form-field__label" for="verify-email-code">Код из письма</label>
+              <input class="form-field__input verify-email-code-input" type="text" id="verify-email-code" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="one-time-code" placeholder="000000" required>
+            </div>
+            <p id="verify-email-error" class="text-error hidden" role="alert"></p>
+            <p id="verify-email-dev-hint" class="auth-form__dev-hint hidden" role="status"></p>
+            <div class="auth-form__submit">
+              <button type="submit" class="btn btn--primary" id="verify-email-submit">Подтвердить</button>
+            </div>
+          </form>
+
+          <p class="auth-switch">
+            Не пришло письмо?
+            <button type="button" class="auth-switch__link" id="verify-email-resend" disabled>Отправить снова</button>
+          </p>
+          <p class="auth-switch">
+            <button type="button" class="auth-switch__link" id="verify-email-logout">Выйти из аккаунта</button>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Настройка профиля -->
+    <div id="screen-profile-setup" class="screen screen--full">
+      <div class="profile-setup scroll-under-nav">
+        <header class="page-head">
+          <h1 class="page-head__title">Настройка профиля</h1>
+        </header>
+        <div class="profile-setup__avatar-section">
+          <div class="avatar-picker">
+            <img src="/assets/avatars/preset-1.svg" alt="Аватар" id="setup-avatar-img">
+            <label class="avatar-picker__edit" for="setup-avatar-file" aria-label="Загрузить фото">
+              <span class="material-symbols-rounded">photo_camera</span>
+            </label>
+          </div>
+          <input type="file" id="setup-avatar-file" accept="image/jpeg,image/png,image/webp,image/gif" class="sr-only">
+          <button type="button" class="avatar-upload-btn ripple-host" id="setup-upload-btn">
+            <span class="material-symbols-rounded">add_a_photo</span>
+            Загрузить своё фото
+          </button>
+          <p class="avatar-upload-hint" id="setup-upload-hint">или выберите из готовых</p>
+          <div class="avatar-presets" id="setup-avatar-presets">
+            <button type="button" class="avatar-presets__item selected" data-preset="/assets/avatars/preset-1.svg"><img src="/assets/avatars/preset-1.svg" alt="1"></button>
+            <button type="button" class="avatar-presets__item" data-preset="/assets/avatars/preset-2.svg"><img src="/assets/avatars/preset-2.svg" alt="2"></button>
+            <button type="button" class="avatar-presets__item" data-preset="/assets/avatars/preset-3.svg"><img src="/assets/avatars/preset-3.svg" alt="3"></button>
+            <button type="button" class="avatar-presets__item" data-preset="/assets/avatars/preset-4.svg"><img src="/assets/avatars/preset-4.svg" alt="4"></button>
+            <button type="button" class="avatar-presets__item" data-preset="/assets/avatars/preset-5.svg"><img src="/assets/avatars/preset-5.svg" alt="5"></button>
+            <button type="button" class="avatar-presets__item" data-preset="/assets/avatars/preset-6.svg"><img src="/assets/avatars/preset-6.svg" alt="6"></button>
+          </div>
+        </div>
+
+        <form id="profile-setup-form" class="profile-setup__form">
+          <div class="form-field">
+            <label class="form-field__label" for="setup-username">Username</label>
+            <input class="form-field__input" type="text" id="setup-username" required autocomplete="username" placeholder="username" autocapitalize="none">
+            <p class="form-field__hint">Уникальное имя: a-z, 0-9, _</p>
+          </div>
+          <div class="form-field">
+            <label class="form-field__label" for="setup-display-name">Отображаемое имя</label>
+            <input class="form-field__input" type="text" id="setup-display-name" required autocomplete="name" placeholder="Как вас зовут">
+          </div>
+          <p id="setup-error" class="text-error hidden" role="alert"></p>
+          <button type="submit" class="btn btn--primary" id="setup-submit">Продолжить</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Главный экран -->
+    <div id="screen-main" class="screen screen--with-nav">
+      <div id="tab-chats" class="tab-panel active">
+        <aside class="chats-sidebar">
+          <header class="chats-sidebar__header">
+            <h1 class="chats-sidebar__title">Чаты</h1>
+            <div class="chats-sidebar__toolbar">
+              <button type="button" class="chats-sidebar__icon-btn ripple-host" id="btn-toggle-search" aria-label="Поиск" aria-expanded="false">
+                <span class="material-symbols-rounded">search</span>
+              </button>
+              <button type="button" class="chats-sidebar__icon-btn chats-sidebar__icon-btn--compose ripple-host" id="fab-new-chat" aria-label="Найти человека">
+                <span class="material-symbols-rounded">person_search</span>
+              </button>
+            </div>
+          </header>
+          <div class="chats-sidebar__scroll" id="chats-scroll">
+            <div class="chats-sidebar__list" id="chat-list"></div>
+          </div>
+        </aside>
+      </div>
+
+      <div id="tab-profile" class="tab-panel">
+        <div class="profile-page scroll-under-nav">
+          <!-- Шапка профиля (как в Telegram) -->
+          <div class="profile-hero">
+            <div class="profile-hero__bg cover-bg cover-gradient--purple" id="profile-hero-bg"></div>
+            <button type="button" class="profile-hero__edit ripple-host" id="btn-cover-gradient" aria-label="Цвет фона">
+              <span class="material-symbols-rounded">edit</span>
+            </button>
+            <div class="profile-hero__content">
+              <div class="avatar avatar--xl" id="profile-avatar">?</div>
+              <h2 class="profile-hero__name" id="profile-display-name">—</h2>
+              <p class="profile-hero__username profile-username-row" id="profile-username">@—</p>
+              <p class="profile-hero__bio hidden" id="profile-bio"></p>
+            </div>
+          </div>
+
+          <!-- Настройки -->
+          <div class="settings-section">
+            <p class="settings-section__title">Аккаунт</p>
+            <div class="settings-card">
+              <button type="button" class="settings-row ripple-host" id="btn-edit-profile-row">
+                <span class="settings-row__icon settings-row__icon--blue"><span class="material-symbols-rounded">person</span></span>
+                <span class="settings-row__body">
+                  <span class="settings-row__label">Изменить профиль</span>
+                  <span class="settings-row__hint" id="profile-hint-name">Имя, фото и о себе</span>
+                </span>
+                <span class="material-symbols-rounded settings-row__chevron">chevron_right</span>
+              </button>
+              <button type="button" class="settings-row ripple-host" id="btn-my-profile">
+                <span class="settings-row__icon settings-row__icon--teal"><span class="material-symbols-rounded">account_circle</span></span>
+                <span class="settings-row__body">
+                  <span class="settings-row__label">Мой профиль</span>
+                  <span class="settings-row__hint">Как вас видят другие</span>
+                </span>
+                <span class="material-symbols-rounded settings-row__chevron">chevron_right</span>
+              </button>
+              <div class="settings-row settings-row--static">
+                <span class="settings-row__icon settings-row__icon--green"><span class="material-symbols-rounded">mail</span></span>
+                <span class="settings-row__body">
+                  <span class="settings-row__label">Email</span>
+                  <span class="settings-row__hint">Для входа в аккаунт</span>
+                  <span class="settings-row__value privacy-account-value" id="profile-email-value">—</span>
+                  <span class="profile-email-status" id="profile-email-status"></span>
+                </span>
+              </div>
+              <button type="button" class="settings-row settings-row--username ripple-host" id="btn-copy-username">
+                <span class="settings-row__icon settings-row__icon--purple"><span class="material-symbols-rounded">alternate_email</span></span>
+                <span class="settings-row__body">
+                  <span class="settings-row__label">Username</span>
+                  <span class="settings-row__hint settings-row__hint--username" id="profile-hint-username">@username</span>
+                </span>
+                <span class="material-symbols-rounded settings-row__chevron">content_copy</span>
+              </button>
+              <button type="button" class="settings-row settings-row--mint ripple-host hidden" id="btn-mint-collectible">
+                <span class="settings-row__icon settings-row__icon--gold"><span class="material-symbols-rounded">verified</span></span>
+                <span class="settings-row__body">
+                  <span class="settings-row__label">Коллекционный @</span>
+                  <span class="settings-row__hint" id="profile-mint-hint">Сделать @username коллекционным</span>
+                </span>
+                <span class="material-symbols-rounded settings-row__chevron">chevron_right</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <p class="settings-section__title">Настройки</p>
+            <div class="settings-card">
+              <button type="button" class="settings-row ripple-host hidden" id="btn-admin">
+                <span class="settings-row__icon settings-row__icon--purple"><span class="material-symbols-rounded">admin_panel_settings</span></span>
+                <span class="settings-row__body">
+                  <span class="settings-row__label">Админ-панель</span>
+                  <span class="settings-row__hint">Пользователи и статистика</span>
+                </span>
+                <span class="material-symbols-rounded settings-row__chevron">chevron_right</span>
+              </button>
+              <button type="button" class="settings-row ripple-host" id="btn-theme">
+                <span class="settings-row__icon settings-row__icon--orange"><span class="material-symbols-rounded">palette</span></span>
+                <span class="settings-row__body">
+                  <span class="settings-row__label">Оформление</span>
+                  <span class="settings-row__hint" id="theme-label">Как в системе</span>
+                </span>
+                <span class="material-symbols-rounded settings-row__chevron">chevron_right</span>
+              </button>
+              <button type="button" class="settings-row ripple-host" id="btn-privacy">
+                <span class="settings-row__icon settings-row__icon--green"><span class="material-symbols-rounded">lock</span></span>
+                <span class="settings-row__body">
+                  <span class="settings-row__label">Конфиденциальность</span>
+                  <span class="settings-row__hint">Email и приватность</span>
+                </span>
+                <span class="material-symbols-rounded settings-row__chevron">chevron_right</span>
+              </button>
+              <button type="button" class="settings-row ripple-host" id="btn-notifications">
+                <span class="settings-row__icon settings-row__icon--red"><span class="material-symbols-rounded">notifications</span></span>
+                <span class="settings-row__body">
+                  <span class="settings-row__label">Уведомления</span>
+                  <span class="settings-row__hint">Push и звуки</span>
+                </span>
+                <span class="material-symbols-rounded settings-row__chevron">chevron_right</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <p class="settings-section__title">О приложении</p>
+            <div class="settings-card">
+              <div class="settings-row settings-row--static">
+                <span class="settings-row__icon settings-row__icon--teal"><span class="material-symbols-rounded">info</span></span>
+                <span class="settings-row__body">
+                  <span class="settings-row__label">Ferom</span>
+                  <span class="settings-row__hint">Версия 1.0.0</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <button type="button" class="settings-logout ripple-host" id="btn-logout">
+            <span class="material-symbols-rounded">logout</span>
+            Выйти из аккаунта
+          </button>
+        </div>
+      </div>
+
+      <!-- Маркет -->
+      <div id="tab-market" class="tab-panel">
+        <div class="market-page scroll-under-nav">
+          <header class="page-head">
+            <h1 class="page-head__title">Маркет</h1>
+          </header>
+
+          <div class="market-balance-chip" id="market-balance-chip">
+            <span class="material-symbols-rounded">diamond</span>
+            <span id="market-balance-text">0</span>
+          </div>
+
+          <div class="market-segments">
+            <button type="button" class="market-segment active ripple-host" data-market-view="cosmetics">Косметика</button>
+            <button type="button" class="market-segment ripple-host" data-market-view="tags">@ Теги</button>
+            <button type="button" class="market-segment ripple-host" data-market-view="inventory">Инвентарь</button>
+          </div>
+
+          <div id="market-cosmetics-view">
+            <div id="market-sections"></div>
+          </div>
+
+          <div id="market-tags-view" class="hidden">
+            <div id="market-tags-toolbar"></div>
+            <div id="market-tags-listings"></div>
+          </div>
+
+          <div id="market-inventory-view" class="hidden">
+            <div id="market-inventory"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Кошелёк -->
+      <div id="tab-wallet" class="tab-panel">
+        <div class="wallet-page scroll-under-nav">
+          <div class="wallet-hero">
+            <div class="wallet-hero__top">
+              <div class="wallet-hero__brand">
+                <span class="material-symbols-rounded">account_balance_wallet</span>
+                Ferom Pay
+              </div>
+              <button type="button" class="wallet-hero__history-btn ripple-host" id="wallet-history-quick" aria-label="История">
+                <span class="material-symbols-rounded">receipt_long</span>
+              </button>
+            </div>
+            <div class="wallet-hero__balance">
+              <span class="material-symbols-rounded wallet-hero__ruby">diamond</span>
+              <span class="wallet-hero__amount" id="wallet-balance">0</span>
+              <span class="wallet-hero__currency">рубинов</span>
+            </div>
+            <div class="wallet-hero__meta" id="wallet-hero-meta">
+              <span class="wallet-hero__chip" id="wallet-status-chip">
+                <span class="material-symbols-rounded">verified</span>
+                Активен
+              </span>
+            </div>
+          </div>
+
+          <div class="wallet-quick">
+            <button type="button" class="wallet-quick__btn ripple-host" id="wallet-topup">
+              <span class="wallet-quick__icon wallet-quick__icon--blue"><span class="material-symbols-rounded">add_card</span></span>
+              Пополнить
+            </button>
+            <button type="button" class="wallet-quick__btn ripple-host" id="wallet-transfer">
+              <span class="wallet-quick__icon wallet-quick__icon--purple"><span class="material-symbols-rounded">send</span></span>
+              Перевести
+            </button>
+            <button type="button" class="wallet-quick__btn ripple-host" id="wallet-history">
+              <span class="wallet-quick__icon wallet-quick__icon--teal"><span class="material-symbols-rounded">history</span></span>
+              История
+            </button>
+          </div>
+
+          <section class="wallet-section" id="wallet-premium-section">
+            <div class="wallet-section__head">
+              <h2 class="wallet-section__title">Подписка</h2>
+            </div>
+            <div class="wallet-premium-card" id="wallet-premium-card"></div>
+          </section>
+
+          <section class="wallet-section">
+            <div class="wallet-section__head">
+              <h2 class="wallet-section__title">Последние операции</h2>
+              <button type="button" class="wallet-section__link" id="wallet-all-history">Все</button>
+            </div>
+            <div id="wallet-recent-tx"></div>
+          </section>
+        </div>
+      </div>
+
+      <!-- Плавающий Tab Bar -->
+      <div class="floating-nav-wrap">
+        <nav class="floating-nav floating-nav--four" id="floating-nav" aria-label="Навигация">
+          <div class="floating-nav__indicator" id="nav-indicator"></div>
+          <button class="floating-nav__item active" data-tab="chats" type="button" aria-current="page">
+            <span class="material-symbols-rounded floating-nav__icon">chat</span>
+            <span class="floating-nav__label">Чаты</span>
+          </button>
+          <button class="floating-nav__item" data-tab="market" type="button">
+            <span class="material-symbols-rounded floating-nav__icon">storefront</span>
+            <span class="floating-nav__label">Маркет</span>
+          </button>
+          <button class="floating-nav__item" data-tab="wallet" type="button">
+            <span class="material-symbols-rounded floating-nav__icon">diamond</span>
+            <span class="floating-nav__label">Кошелёк</span>
+          </button>
+          <button class="floating-nav__item" data-tab="profile" type="button">
+            <span class="material-symbols-rounded floating-nav__icon">person</span>
+            <span class="floating-nav__label">Профиль</span>
+          </button>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Мой профиль (как в Telegram) -->
+    <div id="screen-my-profile" class="screen screen--full tg-profile-screen">
+      <div class="tg-profile-scroll scroll-under-nav" id="my-profile-scroll">
+        <header class="tg-profile-header">
+          <div class="tg-profile-header__bg cover-bg cover-gradient--purple" id="my-profile-bg"></div>
+          <button class="tg-profile-header__back ripple-host" id="my-profile-back" type="button" aria-label="Назад">
+            <span class="material-symbols-rounded">arrow_back</span>
+          </button>
+          <div class="tg-profile-header__main">
+            <div class="tg-profile-header__avatar" id="my-profile-avatar">?</div>
+            <h1 class="tg-profile-header__name" id="my-profile-name">—</h1>
+            <p class="tg-profile-header__status">в сети</p>
+          </div>
+        </header>
+
+        <div class="tg-profile-body">
+          <div class="tg-profile-card">
+            <div class="tg-profile-info-row">
+              <span class="tg-profile-info-row__value tg-profile-info-row__value--link" id="my-profile-username">@—</span>
+              <span class="tg-profile-info-row__label">имя пользователя</span>
+            </div>
+            <div class="tg-profile-info-row hidden" id="my-profile-bio-row">
+              <span class="tg-profile-info-row__value" id="my-profile-bio"></span>
+              <span class="tg-profile-info-row__label">о себе</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Профиль пользователя (из чата / поиска) -->
+    <div id="screen-user-profile" class="screen screen--full tg-profile-screen">
+      <div class="tg-profile-scroll scroll-under-nav" id="user-profile-scroll">
+        <header class="tg-profile-header">
+          <div class="tg-profile-header__bg cover-bg cover-gradient--purple" id="user-profile-bg"></div>
+          <button class="tg-profile-header__back ripple-host" id="user-profile-back" type="button" aria-label="Назад">
+            <span class="material-symbols-rounded">arrow_back</span>
+          </button>
+          <div class="tg-profile-header__main">
+            <div class="avatar-wrap avatar-wrap--xl">
+              <div class="tg-profile-header__avatar" id="user-profile-avatar">?</div>
+              <span class="avatar-online-dot avatar-online-dot--lg hidden" id="user-profile-online-dot"></span>
+            </div>
+            <h1 class="tg-profile-header__name" id="user-profile-name">—</h1>
+            <p class="tg-profile-header__status" id="user-profile-status">—</p>
+          </div>
+        </header>
+
+        <div class="tg-profile-body">
+          <div class="tg-profile-card">
+            <div class="tg-profile-info-row">
+              <span class="tg-profile-info-row__value tg-profile-info-row__value--link" id="user-profile-username">@—</span>
+              <span class="tg-profile-info-row__label">имя пользователя</span>
+            </div>
+            <div class="tg-profile-info-row hidden" id="user-profile-bio-row">
+              <span class="tg-profile-info-row__value" id="user-profile-bio"></span>
+              <span class="tg-profile-info-row__label">о себе</span>
+            </div>
+          </div>
+          <button type="button" class="btn btn--primary user-profile__write ripple-host hidden" id="user-profile-write">
+            Написать сообщение
+          </button>
+
+          <div class="tg-profile-shared hidden" id="user-profile-shared">
+            <div class="tg-profile-tabs" role="tablist" aria-label="Вложения чата">
+              <button type="button" class="tg-profile-tab tg-profile-tab--active" data-shared-tab="media" role="tab" aria-selected="true">Медиа</button>
+              <button type="button" class="tg-profile-tab" data-shared-tab="voice" role="tab" aria-selected="false">Голосовые</button>
+              <button type="button" class="tg-profile-tab" data-shared-tab="links" role="tab" aria-selected="false">Ссылки</button>
+            </div>
+            <div class="tg-profile-shared-panel" id="user-profile-shared-panel">
+              <div class="tg-profile-shared-status" id="user-profile-shared-status"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Конфиденциальность -->
+    <div id="screen-privacy" class="screen screen--full">
+      <header class="top-bar top-bar--sub">
+        <div class="top-bar__slot top-bar__slot--start">
+          <button class="top-bar__icon-btn ripple-host" id="privacy-back" type="button" aria-label="Назад">
+            <span class="material-symbols-rounded">arrow_back</span>
+          </button>
+        </div>
+        <h1 class="top-bar__title">Конфиденциальность</h1>
+        <div class="top-bar__slot top-bar__slot--end"></div>
+      </header>
+      <div class="privacy-page scroll-under-nav">
+        <div class="settings-section">
+          <p class="settings-section__title">Данные аккаунта</p>
+          <div class="settings-card">
+            <div class="settings-row settings-row--static">
+              <span class="settings-row__icon settings-row__icon--purple"><span class="material-symbols-rounded">mail</span></span>
+              <span class="settings-row__body">
+                <span class="settings-row__label">Email</span>
+                <span class="settings-row__hint">Только для входа, другим не показывается</span>
+                <span class="settings-row__value privacy-account-value" id="privacy-email">—</span>
+                <span class="profile-email-status" id="privacy-email-status"></span>
+              </span>
+            </div>
+            <div class="settings-row settings-row--static settings-row--last">
+              <span class="settings-row__icon settings-row__icon--blue"><span class="material-symbols-rounded">alternate_email</span></span>
+              <span class="settings-row__body">
+                <span class="settings-row__label">Ваши @ теги</span>
+                <span class="settings-row__hint privacy-account-value" id="privacy-username">@—</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <p class="settings-section__title">Кто видит мой профиль</p>
+          <div class="settings-card" id="privacy-profile-card"></div>
+        </div>
+
+        <div class="settings-section">
+          <p class="settings-section__title">Сообщения и кошелёк</p>
+          <div class="settings-card" id="privacy-interaction-card"></div>
+        </div>
+
+        <div class="settings-section">
+          <p class="settings-section__title">Теги и поиск</p>
+          <div class="settings-card" id="privacy-tags-card"></div>
+        </div>
+
+        <div class="settings-section">
+          <p class="settings-section__title">Отображение</p>
+          <div class="settings-card">
+            <button type="button" class="settings-row settings-row--toggle settings-row--last ripple-host" id="privacy-plain-username" data-privacy-toggle="showPlainUsername">
+              <span class="settings-row__icon settings-row__icon--gold"><span class="material-symbols-rounded">tag</span></span>
+              <span class="settings-row__body">
+                <span class="settings-row__label">Обычный @username в профиле</span>
+                <span class="settings-row__hint">Показывать прописной тег рядом с коллекционными</span>
+              </span>
+              <span class="settings-toggle" id="privacy-plain-username-toggle" aria-hidden="true"><span class="settings-toggle__knob"></span></span>
+            </button>
+          </div>
+        </div>
+
+        <p class="privacy-footnote">Как в Telegram: «Все» — любой пользователь Ferom; «Никто» — скрыто от других. Существующие чаты не удаляются.</p>
+      </div>
+    </div>
+
+    <!-- Админ-панель -->
+    <div id="screen-admin" class="screen screen--full admin-shell">
+      <header class="admin-topbar">
+        <div class="admin-topbar__start">
+          <button class="top-bar__icon-btn ripple-host" id="admin-back" type="button" aria-label="Назад">
+            <span class="material-symbols-rounded">arrow_back</span>
+          </button>
+          <div class="admin-topbar__title-wrap">
+            <h1 class="admin-topbar__title">Админ-панель</h1>
+            <p class="admin-topbar__subtitle">Управление Ferom</p>
+          </div>
+        </div>
+        <div class="admin-topbar__end">
+          <button type="button" class="admin-topbar__refresh ripple-host" id="admin-refresh" aria-label="Обновить">
+            <span class="material-symbols-rounded">refresh</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="admin-layout">
+        <nav class="admin-nav" id="admin-nav" aria-label="Разделы админки">
+          <button type="button" class="admin-nav__item active" data-admin-tab="dashboard">
+            <span class="material-symbols-rounded">dashboard</span>
+            <span class="admin-nav__label">Обзор</span>
+          </button>
+          <button type="button" class="admin-nav__item" data-admin-tab="users">
+            <span class="material-symbols-rounded">group</span>
+            <span class="admin-nav__label">Пользователи</span>
+          </button>
+          <button type="button" class="admin-nav__item" data-admin-tab="wallet">
+            <span class="material-symbols-rounded">account_balance_wallet</span>
+            <span class="admin-nav__label">Кошелёк</span>
+          </button>
+          <button type="button" class="admin-nav__item" data-admin-tab="tags">
+            <span class="material-symbols-rounded">sell</span>
+            <span class="admin-nav__label">@ Теги</span>
+          </button>
+          <button type="button" class="admin-nav__item" data-admin-tab="moderation">
+            <span class="material-symbols-rounded">gavel</span>
+            <span class="admin-nav__label">Модерация</span>
+          </button>
+        </nav>
+
+        <main class="admin-main scroll-under-nav" id="admin-main">
+          <!-- Обзор -->
+          <section class="admin-panel active" id="admin-panel-dashboard" data-admin-panel="dashboard">
+            <div class="admin-stats-grid" id="admin-stats"></div>
+            <div class="admin-card">
+              <h2 class="admin-card__title">Быстрые действия</h2>
+              <div class="admin-quick-actions">
+                <button type="button" class="admin-quick-btn" data-admin-goto="users" data-admin-filter="banned">
+                  <span class="material-symbols-rounded">block</span>
+                  Заблокированные
+                </button>
+                <button type="button" class="admin-quick-btn" data-admin-goto="wallet">
+                  <span class="material-symbols-rounded">payments</span>
+                  Экономика
+                </button>
+                <button type="button" class="admin-quick-btn" data-admin-goto="tags" data-admin-filter="listed">
+                  <span class="material-symbols-rounded">storefront</span>
+                  Лоты маркета
+                </button>
+                <button type="button" class="admin-quick-btn" data-admin-goto="moderation">
+                  <span class="material-symbols-rounded">forum</span>
+                  Сообщения
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- Пользователи -->
+          <section class="admin-panel" id="admin-panel-users" data-admin-panel="users" hidden>
+            <div class="admin-toolbar">
+              <input type="search" class="admin-search__input" id="admin-users-search" placeholder="Поиск по email, имени, @ тегу…" autocomplete="off">
+              <div class="admin-filter-chips" id="admin-users-filters">
+                <button type="button" class="admin-chip active" data-user-filter="all">Все</button>
+                <button type="button" class="admin-chip" data-user-filter="banned">Бан</button>
+                <button type="button" class="admin-chip" data-user-filter="frozen">Заморозка</button>
+                <button type="button" class="admin-chip" data-user-filter="premium">Premium</button>
+                <button type="button" class="admin-chip" data-user-filter="verified">Верификация</button>
+                <button type="button" class="admin-chip" data-user-filter="admin">Админы</button>
+              </div>
+            </div>
+            <div class="admin-table-wrap">
+              <div class="admin-users-list" id="admin-users-list"></div>
+              <button type="button" class="admin-load-more hidden" id="admin-users-more">Загрузить ещё</button>
+            </div>
+          </section>
+
+          <!-- Кошелёк -->
+          <section class="admin-panel" id="admin-panel-wallet" data-admin-panel="wallet" hidden>
+            <div class="admin-wallet-hero" id="admin-wallet-hero"></div>
+            <div class="admin-card">
+              <h2 class="admin-card__title">Топ балансов</h2>
+              <div id="admin-wallet-top"></div>
+            </div>
+            <div class="admin-card">
+              <h2 class="admin-card__title">Последние операции</h2>
+              <div class="admin-tx-list" id="admin-wallet-tx"></div>
+              <button type="button" class="admin-load-more hidden" id="admin-wallet-more">Загрузить ещё</button>
+            </div>
+          </section>
+
+          <!-- @ Теги -->
+          <section class="admin-panel" id="admin-panel-tags" data-admin-panel="tags" hidden>
+            <div class="admin-toolbar">
+              <input type="search" class="admin-search__input" id="admin-tags-search" placeholder="Поиск @ тега или владельца…" autocomplete="off">
+              <div class="admin-filter-chips" id="admin-tags-filters">
+                <button type="button" class="admin-chip active" data-tag-filter="all">Все</button>
+                <button type="button" class="admin-chip" data-tag-filter="listed">На маркете</button>
+              </div>
+            </div>
+            <div class="admin-tags-grid" id="admin-tags-list"></div>
+            <button type="button" class="admin-load-more hidden" id="admin-tags-more">Загрузить ещё</button>
+          </section>
+
+          <!-- Модерация -->
+          <section class="admin-panel" id="admin-panel-moderation" data-admin-panel="moderation" hidden>
+            <div class="admin-card">
+              <h2 class="admin-card__title">Последние сообщения</h2>
+              <div class="admin-mod-list" id="admin-mod-list"></div>
+              <button type="button" class="admin-load-more hidden" id="admin-mod-more">Загрузить ещё</button>
+            </div>
+          </section>
+        </main>
+
+        <aside class="admin-detail" id="admin-detail" hidden>
+          <div class="admin-detail__head">
+            <button type="button" class="admin-detail__close ripple-host" id="admin-detail-close" aria-label="Закрыть">
+              <span class="material-symbols-rounded">close</span>
+            </button>
+            <h2 class="admin-detail__title">Пользователь</h2>
+          </div>
+          <div class="admin-detail__body scroll-under-nav" id="admin-detail-body"></div>
+        </aside>
+      </div>
+
+      <div class="admin-mod-sheet" id="admin-mod-sheet" hidden aria-hidden="true">
+        <div class="admin-mod-sheet__backdrop" id="admin-mod-sheet-backdrop"></div>
+        <div class="admin-mod-sheet__panel" role="dialog" aria-labelledby="admin-mod-sheet-title">
+          <h3 class="admin-mod-sheet__title" id="admin-mod-sheet-title">Действие</h3>
+          <div class="admin-field-row" id="admin-mod-sheet-reason-row">
+            <label for="admin-mod-sheet-reason">Причина</label>
+            <input type="text" id="admin-mod-sheet-reason" maxlength="200" placeholder="Укажите причину…">
+          </div>
+          <div class="admin-field-row">
+            <label for="admin-mod-sheet-note">Комментарий админа</label>
+            <textarea id="admin-mod-sheet-note" maxlength="500" placeholder="Заметка для себя и других админов…"></textarea>
+          </div>
+          <div class="admin-mod-sheet__actions">
+            <button type="button" class="admin-btn" id="admin-mod-sheet-cancel">Отмена</button>
+            <button type="button" class="admin-btn admin-btn--primary" id="admin-mod-sheet-submit">Применить</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- История кошелька -->
+    <div id="screen-wallet-history" class="screen screen--full">
+      <header class="top-bar top-bar--sub">
+        <div class="top-bar__slot top-bar__slot--start">
+          <button class="top-bar__icon-btn ripple-host" id="wallet-history-back" type="button" aria-label="Назад">
+            <span class="material-symbols-rounded">arrow_back</span>
+          </button>
+        </div>
+        <h1 class="top-bar__title">История операций</h1>
+        <div class="top-bar__slot top-bar__slot--end"></div>
+      </header>
+      <div class="wallet-history-page scroll-under-nav" id="wallet-history-list"></div>
+    </div>
+
+    <!-- Редактирование профиля (Telegram-style) -->
+    <div id="screen-profile-edit" class="screen screen--full tg-edit-screen">
+      <header class="top-bar top-bar--sub">
+        <div class="top-bar__slot top-bar__slot--start">
+          <button class="top-bar__icon-btn ripple-host" id="profile-edit-back" type="button" aria-label="Назад">
+            <span class="material-symbols-rounded">arrow_back</span>
+          </button>
+        </div>
+        <h1 class="top-bar__title">Изменить профиль</h1>
+        <div class="top-bar__slot top-bar__slot--end">
+          <button type="button" class="top-bar__text-btn" id="profile-edit-done">Готово</button>
+        </div>
+      </header>
+
+      <div class="tg-edit-body scroll-under-nav">
+        <div class="tg-edit-avatar-block">
+          <button type="button" class="tg-edit-avatar-btn ripple-host" id="edit-avatar-tap" aria-label="Изменить фото">
+            <img src="/assets/avatars/preset-1.svg" alt="" id="edit-avatar-img" class="hidden">
+            <span class="tg-edit-avatar-btn__placeholder" id="edit-avatar-placeholder">?</span>
+          </button>
+          <button type="button" class="tg-edit-avatar-action" id="edit-avatar-action">Установить фото</button>
+        </div>
+
+        <div class="tg-edit-card">
+          <div class="tg-field">
+            <label class="tg-field__label" for="edit-display-name">Имя</label>
+            <input class="tg-field__input" id="edit-display-name" type="text" maxlength="50" placeholder="Как вас зовут" autocomplete="name">
+          </div>
+          <div class="tg-field tg-field--last">
+            <label class="tg-field__label" for="edit-bio">О себе</label>
+            <textarea class="tg-field__input tg-field__textarea" id="edit-bio" maxlength="140" rows="2" placeholder="Любые подробности"></textarea>
+          </div>
+        </div>
+
+        <div class="tg-edit-card">
+          <div class="tg-field">
+            <label class="tg-field__label" for="edit-username">Username</label>
+            <input class="tg-field__input" id="edit-username" type="text" maxlength="20" placeholder="username" autocapitalize="none" autocomplete="username">
+          </div>
+          <div class="tg-field tg-field--readonly tg-field--last">
+            <span class="tg-field__label">Email</span>
+            <span class="tg-field__value tg-field__value--muted tg-field__value--email" id="edit-email-display">—</span>
+          </div>
+        </div>
+
+        <p class="tg-edit-hint" id="edit-username-hint">Обычный @username — для поиска и переводов. Не совпадает с коллекционными тегами.</p>
+        <p id="profile-error" class="tg-edit-error hidden" role="alert"></p>
+      </div>
+
+      <input type="file" id="edit-avatar-file" accept="image/*" class="sr-only">
+    </div>
+
+  </div>
+
+  <!-- Комната чата (вне #app — fixed-слой не обрезается overflow) -->
+  <div id="screen-chat" class="screen screen--full chat-room">
+    <div class="chat-room__wallpaper" id="chat-wallpaper-wrap" aria-hidden="true">
+      <div class="chat-room__wallpaper-bg" id="chat-wallpaper-bg"></div>
+      <div class="chat-room__wallpaper-gradient hidden" id="chat-wallpaper-gradient"></div>
+      <div class="chat-room__wallpaper-pattern hidden" id="chat-wallpaper-pattern"></div>
+    </div>
+    <header class="top-bar top-bar--chat">
+      <button class="top-bar__icon-btn ripple-host" id="chat-back" type="button" aria-label="Назад">
+        <span class="material-symbols-rounded">arrow_back</span>
+      </button>
+      <button type="button" class="chat-header__tap ripple-host" id="chat-header-tap">
+        <div class="avatar-wrap avatar-wrap--sm">
+          <div class="avatar avatar--sm" id="chat-header-avatar">?</div>
+          <span class="avatar-online-dot hidden" id="chat-header-online-dot"></span>
+        </div>
+        <div class="chat-header__info">
+          <div class="chat-header__name" id="chat-header-name">—</div>
+          <div class="chat-header__status" id="chat-header-status">—</div>
+        </div>
+      </button>
+    </header>
+
+    <div class="chat-pinned-bar hidden" id="chat-pinned-bar">
+      <span class="chat-pinned-bar__accent"></span>
+      <button type="button" class="chat-pinned-bar__body ripple-host" id="chat-pinned-tap">
+        <div class="chat-pinned-bar__title">Закреплённое сообщение</div>
+        <div class="chat-pinned-bar__text" id="chat-pinned-text">—</div>
+      </button>
+      <button type="button" class="chat-pinned-bar__close ripple-host" id="chat-pinned-close" aria-label="Открепить">
+        <span class="material-symbols-rounded">close</span>
+      </button>
+    </div>
+
+    <div class="chat-room__messages-wrap">
+      <div class="chat-date-float hidden" id="chat-date-float" aria-hidden="true"></div>
+      <div class="chat-room__messages" id="chat-messages"></div>
+    </div>
+
+    <div class="chat-voice-recording hidden" id="chat-voice-recording">
+      <span class="chat-voice-recording__dot"></span>
+      <span class="chat-voice-recording__text" id="chat-voice-recording-time">0:00</span>
+      <span class="chat-voice-recording__hint">Отпустите — отправить · свайп влево — отмена</span>
+    </div>
+
+    <div class="chat-reply-bar hidden" id="chat-reply-bar">
+      <span class="chat-reply-bar__accent"></span>
+      <div class="chat-reply-bar__body">
+        <div class="chat-reply-bar__title" id="chat-reply-title">В ответ</div>
+        <div class="chat-reply-bar__text" id="chat-reply-text">—</div>
+      </div>
+      <button type="button" class="chat-reply-bar__close ripple-host" id="chat-reply-close" aria-label="Отменить ответ">
+        <span class="material-symbols-rounded">close</span>
+      </button>
+    </div>
+
+    <div class="chat-photo-compose hidden" id="chat-photo-compose" aria-hidden="true">
+      <header class="chat-photo-compose__header">
+        <button type="button" class="chat-photo-compose__back ripple-host" id="chat-photo-compose-cancel" aria-label="Отмена">
+          <span class="material-symbols-rounded">close</span>
+        </button>
+        <span class="chat-photo-compose__title">Отправить фото</span>
+        <span class="chat-photo-compose__spacer"></span>
+      </header>
+      <div class="chat-photo-compose__stage">
+        <img class="chat-photo-compose__img" id="chat-photo-compose-img" alt="Предпросмотр">
+      </div>
+      <form class="chat-photo-compose__footer" id="chat-photo-compose-form">
+        <input
+          type="text"
+          class="chat-photo-compose__caption"
+          id="chat-photo-compose-caption"
+          placeholder="Добавить подпись..."
+          autocomplete="off"
+          maxlength="1000"
+        >
+        <button type="submit" class="chat-photo-compose__send ripple-host" aria-label="Отправить">
+          <span class="material-symbols-rounded">send</span>
+        </button>
+      </form>
+    </div>
+
+    <form class="chat-room__input" id="chat-send-form">
+      <input type="file" id="chat-photo-input" accept="image/jpeg,image/png,image/webp,image/gif" class="sr-only">
+      <button type="button" class="chat-input__attach ripple-host" id="chat-attach-btn" aria-label="Прикрепить фото">
+        <span class="material-symbols-rounded">attach_file</span>
+      </button>
+      <input
+        type="text"
+        class="chat-input__field"
+        id="chat-input"
+        placeholder="Сообщение"
+        autocomplete="off"
+        maxlength="2000"
+      >
+      <button type="button" class="chat-input__mic ripple-host" id="chat-mic-btn" aria-label="Голосовое сообщение">
+        <span class="material-symbols-rounded">mic</span>
+      </button>
+      <button type="submit" class="chat-input__send ripple-host" aria-label="Отправить">
+        <span class="material-symbols-rounded">send</span>
+      </button>
+    </form>
+  </div>
+
+    <div id="desktop-chat-empty" class="desktop-chat-empty desktop-chat-empty--pattern hidden" aria-hidden="true">
+      <div class="desktop-chat-empty__inner">
+        <span class="material-symbols-rounded desktop-chat-empty__icon">forum</span>
+        <h2 class="desktop-chat-empty__title">Ferom для Web</h2>
+        <p class="desktop-chat-empty__text">Выберите чат, чтобы начать общение</p>
+      </div>
+    </div>
+
+    </div><!-- /desktop-workspace -->
+  </div><!-- /desktop-shell -->
+
+  <!-- Action sheets (на уровне body — корректный fixed) -->
+  <div class="action-sheet" id="cover-sheet" aria-hidden="true">
+    <div class="action-sheet__backdrop" data-close-sheet></div>
+    <div class="action-sheet__stack">
+      <div class="action-sheet__panel glass">
+        <p class="action-sheet__title">Фон профиля</p>
+        <div class="gradient-picker" id="gradient-picker"></div>
+      </div>
+      <button type="button" class="action-sheet__cancel glass" data-close-sheet>Готово</button>
+    </div>
+  </div>
+
+  <div class="action-sheet" id="avatar-sheet" aria-hidden="true">
+    <div class="action-sheet__backdrop" data-close-sheet></div>
+    <div class="action-sheet__stack">
+      <div class="action-sheet__panel glass">
+        <p class="action-sheet__title">Фото профиля</p>
+        <button type="button" class="action-sheet__btn" id="sheet-upload-photo">Загрузить из галереи</button>
+        <button type="button" class="action-sheet__btn" id="sheet-choose-preset">Выбрать аватар</button>
+        <button type="button" class="action-sheet__btn action-sheet__btn--destructive hidden" id="sheet-remove-photo">Удалить фото</button>
+      </div>
+      <button type="button" class="action-sheet__cancel glass" data-close-sheet>Отмена</button>
+    </div>
+  </div>
+
+  <div class="action-sheet" id="presets-sheet" aria-hidden="true">
+    <div class="action-sheet__backdrop" data-close-sheet></div>
+    <div class="action-sheet__stack">
+      <div class="action-sheet__panel glass">
+        <p class="action-sheet__title">Выберите аватар</p>
+        <div class="presets-sheet-grid" id="edit-presets-grid">
+          <button type="button" data-preset="/assets/avatars/preset-1.svg"><img src="/assets/avatars/preset-1.svg" alt="1"></button>
+          <button type="button" data-preset="/assets/avatars/preset-2.svg"><img src="/assets/avatars/preset-2.svg" alt="2"></button>
+          <button type="button" data-preset="/assets/avatars/preset-3.svg"><img src="/assets/avatars/preset-3.svg" alt="3"></button>
+          <button type="button" data-preset="/assets/avatars/preset-4.svg"><img src="/assets/avatars/preset-4.svg" alt="4"></button>
+          <button type="button" data-preset="/assets/avatars/preset-5.svg"><img src="/assets/avatars/preset-5.svg" alt="5"></button>
+          <button type="button" data-preset="/assets/avatars/preset-6.svg"><img src="/assets/avatars/preset-6.svg" alt="6"></button>
+        </div>
+      </div>
+      <button type="button" class="action-sheet__cancel glass" data-close-sheet>Отмена</button>
+    </div>
+  </div>
+
+  <div class="action-sheet" id="reaction-sheet" aria-hidden="true">
+    <div class="action-sheet__backdrop" data-close-sheet></div>
+    <div class="action-sheet__stack">
+      <div class="action-sheet__panel glass">
+        <p class="action-sheet__title">Реакция</p>
+        <div class="reaction-picker" id="reaction-picker">
+          <button type="button" class="reaction-picker__btn" data-emoji="👍" aria-label="Нравится">👍</button>
+          <button type="button" class="reaction-picker__btn" data-emoji="❤️" aria-label="Любовь">❤️</button>
+          <button type="button" class="reaction-picker__btn" data-emoji="😂" aria-label="Смех">😂</button>
+          <button type="button" class="reaction-picker__btn" data-emoji="😮" aria-label="Удивление">😮</button>
+          <button type="button" class="reaction-picker__btn" data-emoji="😢" aria-label="Грусть">😢</button>
+          <button type="button" class="reaction-picker__btn" data-emoji="🔥" aria-label="Огонь">🔥</button>
+        </div>
+      </div>
+      <button type="button" class="action-sheet__cancel glass" data-close-sheet>Отмена</button>
+    </div>
+  </div>
+
+  <div class="action-sheet" id="chat-delete-sheet" aria-hidden="true">
+    <div class="action-sheet__backdrop" data-close-sheet></div>
+    <div class="action-sheet__stack">
+      <div class="action-sheet__panel glass">
+        <p class="action-sheet__title" id="chat-delete-sheet-title">Удалить чат?</p>
+        <p class="chat-delete-sheet__subtitle" id="chat-delete-sheet-subtitle">—</p>
+        <button type="button" class="action-sheet__btn" id="chat-delete-self-btn">Удалить у себя</button>
+        <button type="button" class="action-sheet__btn action-sheet__btn--destructive" id="chat-delete-both-btn">Удалить у обоих</button>
+      </div>
+      <button type="button" class="action-sheet__cancel glass" data-close-sheet>Отмена</button>
+    </div>
+  </div>
+
+  <!-- Пополнение рубинов -->
+  <div class="action-sheet" id="wallet-topup-sheet" aria-hidden="true">
+    <div class="action-sheet__backdrop" data-close-sheet></div>
+    <div class="action-sheet__stack">
+      <div class="action-sheet__panel glass">
+        <p class="action-sheet__title">Пополнить рубины</p>
+        <p class="text-muted">Демо-пополнение с карты</p>
+        <div class="wallet-sheet-presets" id="wallet-topup-presets"></div>
+        <div class="wallet-sheet-field">
+          <label class="wallet-sheet-field__label" for="wallet-topup-custom">Или своя сумма</label>
+          <input class="wallet-sheet-field__input" type="number" id="wallet-topup-custom" min="10" max="10000" placeholder="10 — 10 000">
+        </div>
+        <button type="button" class="btn btn--primary wallet-sheet-submit" id="wallet-topup-submit">Пополнить</button>
+      </div>
+      <button type="button" class="action-sheet__cancel glass" data-close-sheet>Отмена</button>
+    </div>
+  </div>
+
+  <!-- Перевод рубинов -->
+  <div class="action-sheet" id="wallet-transfer-sheet" aria-hidden="true">
+    <div class="action-sheet__backdrop" data-close-sheet></div>
+    <div class="action-sheet__stack">
+      <div class="action-sheet__panel glass">
+        <p class="action-sheet__title">Перевод рубинов</p>
+        <div class="wallet-sheet-field">
+          <label class="wallet-sheet-field__label" for="wallet-transfer-user">Получатель</label>
+          <input class="wallet-sheet-field__input" type="text" id="wallet-transfer-user" placeholder="@username" autocapitalize="none" autocomplete="off">
+        </div>
+        <div class="wallet-sheet-field">
+          <label class="wallet-sheet-field__label" for="wallet-transfer-amount">Сумма</label>
+          <input class="wallet-sheet-field__input" type="number" id="wallet-transfer-amount" min="1" placeholder="Сколько рубинов">
+        </div>
+        <div class="wallet-sheet-field">
+          <label class="wallet-sheet-field__label" for="wallet-transfer-note">Комментарий</label>
+          <input class="wallet-sheet-field__input" type="text" id="wallet-transfer-note" maxlength="200" placeholder="Необязательно">
+        </div>
+        <button type="button" class="btn btn--primary wallet-sheet-submit" id="wallet-transfer-submit">Отправить</button>
+      </div>
+      <button type="button" class="action-sheet__cancel glass" data-close-sheet>Отмена</button>
+    </div>
+  </div>
+
+  <!-- Меню чата (ПКМ на десктопе) -->
+  <div class="chat-context-menu" id="chat-context-menu" aria-hidden="true">
+    <div class="chat-context-menu__backdrop" id="chat-context-menu-backdrop"></div>
+    <div class="chat-context-menu__panel" id="chat-context-menu-panel" role="menu">
+      <div class="chat-context-menu__preview" id="chat-context-menu-preview">—</div>
+      <div class="chat-context-menu__actions" id="chat-context-menu-actions"></div>
+    </div>
+  </div>
+
+  <!-- Меню сообщения (Telegram-style) -->
+  <div class="message-menu" id="message-menu" aria-hidden="true">
+    <div class="message-menu__backdrop" id="message-menu-backdrop"></div>
+    <div class="message-menu__panel">
+      <div class="message-menu__reactions" id="message-menu-reactions">
+        <button type="button" class="message-menu__reaction" data-emoji="👍">👍</button>
+        <button type="button" class="message-menu__reaction" data-emoji="❤️">❤️</button>
+        <button type="button" class="message-menu__reaction" data-emoji="😂">😂</button>
+        <button type="button" class="message-menu__reaction" data-emoji="😮">😮</button>
+        <button type="button" class="message-menu__reaction" data-emoji="😢">😢</button>
+        <button type="button" class="message-menu__reaction" data-emoji="🔥">🔥</button>
+      </div>
+      <div class="message-menu__preview-wrap">
+        <div class="message-menu__preview" id="message-menu-preview">—</div>
+      </div>
+      <div class="message-menu__actions" id="message-menu-actions"></div>
+    </div>
+  </div>
+
+  <div id="snackbar" class="snackbar" role="status" aria-live="polite"></div>
+
+  <div class="account-modal" id="account-modal" hidden aria-hidden="true">
+    <div class="account-modal__backdrop" id="account-modal-backdrop"></div>
+    <div class="account-modal__dialog" role="alertdialog" aria-modal="true" aria-labelledby="account-modal-title" aria-describedby="account-modal-desc">
+      <div class="account-modal__glow" aria-hidden="true"></div>
+      <div class="account-modal__icon-ring">
+        <span class="material-symbols-rounded account-modal__icon" id="account-modal-icon">block</span>
+      </div>
+      <h2 class="account-modal__title" id="account-modal-title"></h2>
+      <p class="account-modal__desc" id="account-modal-desc"></p>
+      <ol class="account-modal__steps hidden" id="account-modal-steps"></ol>
+      <p class="account-modal__reason hidden" id="account-modal-reason"></p>
+      <button type="button" class="account-modal__btn" id="account-modal-btn">Понятно</button>
+    </div>
+  </div>
+
+  <!-- Поиск пользователей (полноэкранный) -->
+  <div class="search-sheet" id="search-sheet" aria-hidden="true">
+    <div class="search-sheet__bar">
+      <button type="button" class="search-sheet__back ripple-host" id="search-close" aria-label="Закрыть">
+        <span class="material-symbols-rounded">arrow_back</span>
+      </button>
+      <div class="search-sheet__field">
+        <span class="material-symbols-rounded search-sheet__field-icon">search</span>
+        <input
+          type="search"
+          id="user-search"
+          class="search-sheet__input"
+          placeholder="Поиск по @username"
+          autocomplete="off"
+          enterkeyhint="search"
+          autocapitalize="none"
+        >
+        <button type="button" class="search-sheet__clear hidden" id="search-clear" aria-label="Очистить">
+          <span class="material-symbols-rounded">close</span>
+        </button>
+      </div>
+    </div>
+    <div class="search-sheet__body" id="user-results">
+      <p class="search-sheet__hint">Введите username, чтобы найти человека</p>
+    </div>
+  </div>
+
+  <!-- Минт коллекционного @ -->
+  <div class="action-sheet" id="mint-sheet" aria-hidden="true">
+    <div class="action-sheet__backdrop" data-close-sheet></div>
+    <div class="action-sheet__stack">
+      <div class="action-sheet__panel glass mint-sheet-panel">
+        <p class="action-sheet__title">Коллекционный @</p>
+        <div id="mint-preview-content" class="mint-preview">
+          <div class="spinner" style="margin:24px auto"></div>
+        </div>
+        <button type="button" class="action-sheet__btn action-sheet__btn--primary hidden" id="mint-confirm-btn">
+          Согласен — создать коллекционный @
+        </button>
+      </div>
+      <button type="button" class="action-sheet__cancel glass" data-close-sheet>Отмена</button>
+    </div>
+  </div>
+
+  <!-- Выставить @ на маркет -->
+  <div class="action-sheet" id="list-collectible-sheet" aria-hidden="true">
+    <div class="action-sheet__backdrop" data-close-sheet></div>
+    <div class="action-sheet__stack">
+      <div class="action-sheet__panel glass">
+        <p class="action-sheet__title">Выставить на продажу</p>
+        <p id="list-collectible-handle" class="mint-sheet-hint"></p>
+        <p class="mint-sheet-hint">Укажите цену в рубинах</p>
+        <div class="mint-price-field">
+          <span class="material-symbols-rounded">diamond</span>
+          <input type="number" id="list-price-input" class="mint-price-input" min="10" step="1" placeholder="Цена">
+        </div>
+        <button type="button" class="action-sheet__btn action-sheet__btn--primary" id="list-collectible-submit">Выставить</button>
+      </div>
+      <button type="button" class="action-sheet__cancel glass" data-close-sheet>Отмена</button>
+    </div>
+  </div>
+
+  <!-- Fragment — карточка коллекционного @ -->
+  <div class="action-sheet action-sheet--fragment" id="fragment-sheet" aria-hidden="true">
+    <div class="action-sheet__backdrop" data-close-sheet></div>
+    <div class="action-sheet__stack">
+      <div class="fragment-card" id="fragment-card">
+        <div class="fragment-card__hero" id="fragment-hero">
+          <div class="fragment-card__handle" id="fragment-handle"></div>
+          <div class="fragment-card__badge">
+            <span class="material-symbols-rounded">verified</span>
+            Collectible Username
+          </div>
+        </div>
+        <div class="fragment-card__body">
+          <div id="fragment-rarity"></div>
+          <div class="fragment-card__rows" id="fragment-rows"></div>
+          <div class="fragment-card__owner hidden" id="fragment-owner"></div>
+          <div class="fragment-card__actions hidden" id="fragment-actions">
+            <button type="button" class="fragment-card__buy ripple-host" id="fragment-buy-btn">
+              <span class="material-symbols-rounded">shopping_cart</span>
+              <span id="fragment-buy-label">Купить</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="action-sheet__cancel glass" data-close-sheet>Закрыть</button>
+    </div>
+  </div>
+
+  <!-- Ferom Premium — карточка подписки -->
+  <div class="action-sheet action-sheet--fragment" id="premium-sheet" aria-hidden="true">
+    <div class="action-sheet__backdrop" data-close-sheet></div>
+    <div class="action-sheet__stack">
+      <div class="fragment-card premium-sheet-card">
+        <div class="fragment-card__hero fragment-card__hero--ruby">
+          <div class="premium-sheet-card__icon"><span class="material-symbols-rounded">diamond</span></div>
+          <div class="fragment-card__handle" id="premium-sheet-title">Ferom Premium</div>
+          <div class="fragment-card__badge">
+            <span class="material-symbols-rounded">diamond</span>
+            Premium Subscription
+          </div>
+        </div>
+        <div class="fragment-card__body">
+          <p class="premium-sheet-card__desc" id="premium-sheet-desc"></p>
+          <div class="premium-sheet-card__status" id="premium-sheet-status"></div>
+          <div class="fragment-card__owner hidden" id="premium-sheet-owner"></div>
+          <div class="fragment-card__actions hidden" id="premium-sheet-action"></div>
+        </div>
+      </div>
+      <button type="button" class="action-sheet__cancel glass" data-close-sheet>Закрыть</button>
+    </div>
+  </div>
+
+  <!-- Верификация — официальный аккаунт -->
+  <div class="action-sheet action-sheet--fragment" id="verified-sheet" aria-hidden="true">
+    <div class="action-sheet__backdrop" data-close-sheet></div>
+    <div class="action-sheet__stack">
+      <div class="fragment-card verified-sheet-card">
+        <div class="fragment-card__hero verified-sheet-card__hero">
+          <div class="verified-sheet-card__icon"><span class="material-symbols-rounded">verified</span></div>
+          <div class="fragment-card__handle">Официальный аккаунт</div>
+          <div class="fragment-card__badge verified-sheet-card__badge">
+            <span class="material-symbols-rounded">verified</span>
+            Verified Account
+          </div>
+        </div>
+        <div class="fragment-card__body">
+          <div id="verified-sheet-text"></div>
+          <div class="fragment-card__owner hidden" id="verified-sheet-owner"></div>
+        </div>
+      </div>
+      <button type="button" class="action-sheet__cancel glass" data-close-sheet>Закрыть</button>
+    </div>
+  </div>
+
+  <div class="action-sheet action-sheet--wallpaper" id="wallpaper-customize-sheet" aria-hidden="true">
+    <div class="action-sheet__backdrop" data-close-sheet></div>
+    <div class="action-sheet__stack action-sheet__stack--tall">
+      <div class="action-sheet__panel glass wallpaper-sheet">
+        <p class="action-sheet__title">Настройка обоев</p>
+        <div class="wallpaper-sheet__preview" id="wallpaper-preview"></div>
+
+        <div class="wallpaper-sheet__section">
+          <p class="wallpaper-sheet__label">Узор</p>
+          <div class="wallpaper-sheet__chips" id="wallpaper-pattern-chips"></div>
+        </div>
+
+        <div class="wallpaper-sheet__section">
+          <p class="wallpaper-sheet__label">Фон чата</p>
+          <p class="wallpaper-sheet__hint">Только для переписки · тема приложения — в маркете</p>
+          <div class="wallpaper-variant-grid" id="wallpaper-variant-chips-basic"></div>
+        </div>
+
+        <div class="wallpaper-sheet__section hidden" id="wallpaper-variant-premium-section">
+          <p class="wallpaper-sheet__label wallpaper-sheet__label--sub">Премиум-фоны ✦</p>
+          <div class="wallpaper-variant-grid" id="wallpaper-variant-chips-premium"></div>
+        </div>
+
+        <div class="wallpaper-sheet__row hidden" id="wallpaper-custom-row">
+          <label class="wallpaper-sheet__field" for="wallpaper-custom-bg">
+            <span>Цвет фона</span>
+            <input type="color" id="wallpaper-custom-bg" value="#efeae2">
+          </label>
+          <label class="wallpaper-sheet__field" for="wallpaper-custom-pattern">
+            <span>Цвет узора</span>
+            <input type="color" id="wallpaper-custom-pattern" value="#6b5c52">
+          </label>
+        </div>
+
+        <label class="wallpaper-sheet__range" for="wallpaper-pattern-opacity">
+          <span>Прозрачность узора</span>
+          <input type="range" id="wallpaper-pattern-opacity" min="4" max="35" value="14">
+        </label>
+        <label class="wallpaper-sheet__range hidden" id="wallpaper-gradient-row" for="wallpaper-gradient-opacity">
+          <span>Интенсивность градиента</span>
+          <input type="range" id="wallpaper-gradient-opacity" min="15" max="100" value="62">
+        </label>
+
+        <button type="button" class="action-sheet__btn action-sheet__btn--primary" id="wallpaper-save-btn">Сохранить</button>
+      </div>
+      <button type="button" class="action-sheet__cancel glass" data-close-sheet>Отмена</button>
+    </div>
+  </div>
+
+  <div class="action-sheet" id="privacy-picker-sheet" aria-hidden="true">
+    <div class="action-sheet__backdrop" data-close-sheet></div>
+    <div class="action-sheet__stack">
+      <div class="action-sheet__panel glass">
+        <p class="action-sheet__title" id="privacy-picker-title">Кто видит</p>
+        <div id="privacy-picker-options"></div>
+      </div>
+      <button type="button" class="action-sheet__cancel glass" data-close-sheet>Отмена</button>
+    </div>
+  </div>
+
+  <script type="module" src="/js/material-init.js"></script>
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>

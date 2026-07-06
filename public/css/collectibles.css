@@ -1,0 +1,692 @@
+/**
+ * Коллекционные @username — стили как в Telegram Fragment
+ */
+
+.collectible-username {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline;
+}
+
+.collectible-username--aurora {
+  background-image: linear-gradient(90deg, #22d3ee, #a78bfa, #f472b6, #22d3ee);
+  background-size: 200% auto;
+  animation: collectible-shimmer 4s linear infinite;
+}
+
+.collectible-username--neon {
+  background-image: linear-gradient(90deg, #00f5ff, #bf00ff, #ff00aa);
+  filter: drop-shadow(0 0 6px color-mix(in srgb, #bf00ff 35%, transparent));
+}
+
+.collectible-username--ruby {
+  background-image: linear-gradient(135deg, #fda4af, #e11d48, #be123c, #fb7185);
+}
+
+.collectible-username--gold {
+  background-image: linear-gradient(135deg, #fde68a, #f59e0b, #d97706, #fcd34d);
+}
+
+.collectible-username--ice {
+  background-image: linear-gradient(135deg, #e0f2fe, #38bdf8, #0ea5e9, #bae6fd);
+}
+
+.collectible-username--pixel {
+  background-image: linear-gradient(90deg, #4ade80, #22d3ee, #a78bfa);
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.08em;
+}
+
+.collectible-username--silver {
+  background-image: linear-gradient(135deg, #f8fafc, #94a3b8, #cbd5e1, #e2e8f0);
+}
+
+.collectible-username--bronze {
+  background-image: linear-gradient(135deg, #fdba74, #c2410c, #9a3412, #fed7aa);
+}
+
+.collectible-username--mint {
+  background-image: linear-gradient(135deg, #a7f3d0, #10b981, #059669, #6ee7b7);
+}
+
+.collectible-username--dim {
+  background-image: linear-gradient(135deg, #a1a1aa, #71717a, #52525b);
+}
+
+@keyframes collectible-shimmer {
+  to { background-position: 200% center; }
+}
+
+.collectible-badge {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 4px;
+  font-size: 0.75em;
+  color: var(--md-sys-color-primary);
+  vertical-align: middle;
+}
+
+.rarity-pill {
+  display: inline-flex;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.rarity-pill--legendary { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #451a03; }
+.rarity-pill--epic { background: linear-gradient(135deg, #c084fc, #7c3aed); color: #fff; }
+.rarity-pill--rare { background: linear-gradient(135deg, #38bdf8, #0ea5e9); color: #0c4a6e; }
+.rarity-pill--common {
+  background: color-mix(in srgb, var(--md-sys-color-on-surface-variant) 15%, transparent);
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.collectible-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--md-sys-shape-corner-large);
+  background: color-mix(in srgb, var(--md-sys-color-surface-container-high) 92%, transparent);
+  border: 1px solid color-mix(in srgb, var(--md-sys-color-outline-variant) 30%, transparent);
+  overflow: hidden;
+  min-height: 160px;
+}
+
+.collectible-card--owned { border-color: color-mix(in srgb, var(--md-sys-color-primary) 35%, transparent); }
+.collectible-card--equipped { box-shadow: 0 0 0 2px var(--md-sys-color-primary); }
+.collectible-card--taken { opacity: 0.72; }
+
+.collectible-card__hero {
+  padding: 20px 14px 14px;
+  text-align: center;
+  position: relative;
+  min-height: 88px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.collectible-card__hero--aurora { background: linear-gradient(160deg, #0f172a, #4c1d95); }
+.collectible-card__hero--neon { background: linear-gradient(160deg, #0a0a12, #1e1b4b); }
+.collectible-card__hero--ruby { background: linear-gradient(160deg, #1a0a0f, #881337); }
+.collectible-card__hero--gold { background: linear-gradient(160deg, #1a1408, #78350f); }
+.collectible-card__hero--ice { background: linear-gradient(160deg, #0c1929, #0c4a6e); }
+.collectible-card__hero--pixel { background: linear-gradient(160deg, #0a1a0a, #14532d); }
+.collectible-card__hero--silver { background: linear-gradient(160deg, #1e293b, #475569); }
+.collectible-card__hero--bronze { background: linear-gradient(160deg, #1c1410, #7c2d12); }
+.collectible-card__hero--mint { background: linear-gradient(160deg, #052e16, #065f46); }
+.collectible-card__hero--dim { background: linear-gradient(160deg, #18181b, #3f3f46); }
+
+.collectible-card__handle { font-size: 1.375rem; font-weight: 800; line-height: 1.2; }
+
+button.collectible-card__handle {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: center;
+  cursor: pointer;
+}
+
+button.collectible-card__handle:active {
+  opacity: 0.85;
+}
+
+.collectible-card__rarity { position: absolute; top: 8px; right: 8px; }
+.collectible-card__body { padding: 10px 12px 12px; flex: 1; display: flex; flex-direction: column; gap: 6px; }
+.collectible-card__tagline { font-size: 0.6875rem; color: var(--md-sys-color-on-surface-variant); line-height: 1.35; }
+.collectible-card__owner { font-size: 0.6875rem; color: var(--md-sys-color-on-surface-variant); }
+.collectible-card__footer { display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-top: auto; }
+.collectible-card__status { font-size: 0.6875rem; font-weight: 600; color: var(--md-sys-color-primary); }
+
+.collectible-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding: 0 16px 8px;
+}
+
+.collectible-info-banner {
+  margin: 0 16px 16px;
+  padding: 12px 14px;
+  border-radius: var(--md-sys-shape-corner-large);
+  background: color-mix(in srgb, var(--md-sys-color-primary-container) 45%, transparent);
+  border: 1px solid color-mix(in srgb, var(--md-sys-color-primary) 20%, transparent);
+  font-size: 0.8125rem;
+  line-height: 1.45;
+}
+
+.profile-username-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 4px 0 0;
+  padding: 0;
+}
+
+/* ─── TG-style account line ─── */
+.tg-account-line {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  line-height: 1.35;
+  max-width: 100%;
+}
+
+/* Шапка профиля — крупная одна строка */
+.tg-account-line--hero {
+  font-size: 1rem;
+  font-weight: 500;
+  gap: 7px;
+}
+
+.tg-account-line--hero .tg-line-plain {
+  color: rgba(255, 255, 255, 0.96);
+  font-size: 1rem;
+}
+
+.tg-line-sep--hero {
+  font-size: 0.6875rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0 1px;
+  line-height: 1;
+}
+
+.tg-account-line--hero .tg-line-more {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.tg-account-line--hero .collectible-username,
+.tg-account-line--hero .tg-line-coll--md .collectible-username {
+  font-size: 1rem;
+}
+
+/* Компакт — поиск */
+.tg-account-line--compact {
+  justify-content: flex-start;
+  font-size: 0.875rem;
+  gap: 4px;
+}
+
+.tg-line-sep--compact {
+  font-size: 0.5625rem;
+  color: var(--md-sys-color-on-surface-variant);
+  opacity: 0.5;
+  line-height: 1;
+  margin: 0 1px;
+}
+
+/* Username в настройках — горизонтально, звезда чуть меньше чем в шапке */
+.tg-account-line--settings {
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  font-size: 0.875rem;
+  gap: 5px;
+  max-width: 100%;
+  overflow: visible;
+  white-space: normal;
+}
+
+.tg-account-line--settings .tg-line-plain {
+  color: var(--md-sys-color-primary);
+  font-weight: 400;
+}
+
+.tg-line-sep--settings {
+  font-size: 0.5625rem;
+  color: var(--md-sys-color-on-surface-variant);
+  opacity: 0.5;
+  line-height: 1;
+  margin: 0 1px;
+}
+
+.tg-account-line--settings .collectible-username,
+.tg-account-line--settings .tg-line-coll .collectible-username {
+  font-size: 0.875rem;
+}
+
+.tg-account-line--settings .tg-line-more {
+  font-size: 0.8125rem;
+}
+
+.tg-line-plain {
+  font-weight: 500;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.tg-line-more {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--md-sys-color-on-surface-variant);
+  opacity: 0.85;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  line-height: inherit;
+  vertical-align: baseline;
+}
+
+.tg-line-more:hover,
+.tg-line-more:focus-visible {
+  opacity: 1;
+  color: var(--md-sys-color-primary);
+}
+
+.tg-account-line--expanded {
+  row-gap: 4px;
+}
+
+.tg-account-line--hero.tg-account-line--expanded {
+  justify-content: center;
+}
+
+.tg-line-coll {
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  vertical-align: baseline;
+  cursor: pointer;
+}
+
+.tg-line-coll .collectible-username {
+  font-size: 0.8125rem;
+}
+
+.tg-line-coll--md .collectible-username {
+  font-size: 1.0625rem;
+}
+
+/* Карточка «Мой профиль» / профиль пользователя */
+.tg-account-line--info {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: flex-start;
+  gap: 5px;
+  width: 100%;
+  font-size: 1.0625rem;
+  line-height: 1.35;
+}
+
+.tg-account-line--info .tg-line-plain {
+  color: var(--md-sys-color-primary);
+  font-weight: 400;
+}
+
+.tg-line-sep--info {
+  font-size: 0.5625rem;
+  color: var(--md-sys-color-on-surface-variant);
+  opacity: 0.45;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.tg-account-line--info .collectible-username,
+.tg-account-line--info .tg-line-coll--md .collectible-username {
+  font-size: 1.0625rem;
+}
+
+.tg-account-line--info .tg-line-more {
+  font-size: 0.9375rem;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.inventory-collectible-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.tg-tags-comma {
+  opacity: 0.55;
+}
+
+.tg-account-line .collectible-tag-link {
+  padding: 0;
+  margin: 0;
+  gap: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+  line-height: inherit;
+  display: inline;
+  vertical-align: baseline;
+}
+
+.mint-cta-card {
+  margin: 0 16px 16px;
+  padding: 16px;
+  border-radius: var(--md-sys-shape-corner-large);
+  background: color-mix(in srgb, var(--md-sys-color-primary-container) 50%, transparent);
+  border: 1px dashed color-mix(in srgb, var(--md-sys-color-primary) 35%, transparent);
+  text-align: center;
+}
+
+.mint-cta-card__handle {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin: 8px 0 12px;
+}
+
+.mint-cta-card__btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 600;
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+}
+
+.mint-preview { padding: 4px 0 8px; text-align: center; }
+.mint-preview__handle {
+  font-size: 1.375rem;
+  font-weight: 800;
+  margin: 10px 0;
+  line-height: 1.25;
+  word-break: break-word;
+}
+.mint-preview__handle .collectible-username {
+  font-size: 1.375rem;
+}
+.mint-preview__score { font-size: 0.8125rem; color: var(--md-sys-color-on-surface-variant); margin-bottom: 12px; }
+.mint-preview__factors {
+  text-align: left;
+  margin: 12px 0;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--md-sys-color-surface-container-high) 80%, transparent);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+.mint-preview__factors li { display: flex; justify-content: space-between; gap: 8px; }
+.mint-preview__fee { font-size: 0.8125rem; margin: 12px 0; color: var(--md-sys-color-on-surface-variant); }
+.mint-preview__warn {
+  font-size: 0.75rem;
+  color: var(--md-sys-color-error);
+  margin-top: 8px;
+  line-height: 1.4;
+}
+.mint-sheet-hint { font-size: 0.875rem; color: var(--md-sys-color-on-surface-variant); margin-bottom: 12px; }
+.mint-price-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--md-sys-color-surface-container-high);
+  margin-bottom: 12px;
+}
+.mint-price-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font: inherit;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--md-sys-color-on-surface);
+  outline: none;
+}
+.mint-price-field .material-symbols-rounded { color: #db2777; font-size: 20px; }
+
+.collectible-my-card {
+  margin: 0 16px 12px;
+  padding: 14px;
+  border-radius: var(--md-sys-shape-corner-large);
+  background: color-mix(in srgb, var(--md-sys-color-surface-container-high) 92%, transparent);
+  border: 1px solid color-mix(in srgb, var(--md-sys-color-primary) 30%, transparent);
+}
+.collectible-my-card__head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+.collectible-my-card__actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* Кликабельный коллекционный @ */
+.collectible-tag-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: none;
+  background: none;
+  padding: 2px 4px;
+  margin: -2px -4px;
+  border-radius: 8px;
+  font: inherit;
+  cursor: pointer;
+  vertical-align: baseline;
+}
+
+.collectible-tag-link:active {
+  background: color-mix(in srgb, var(--md-sys-color-primary) 10%, transparent);
+}
+
+.profile-username-row .collectible-tag-link {
+  justify-content: center;
+}
+
+/* Fragment card — как в Telegram */
+.action-sheet--fragment .action-sheet__stack {
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+.fragment-card {
+  border-radius: var(--md-sys-shape-corner-extra-large);
+  overflow: hidden;
+  background: var(--md-sys-color-surface-container-high);
+  border: 1px solid color-mix(in srgb, var(--md-sys-color-outline-variant) 35%, transparent);
+  box-shadow: var(--md-sys-elevation-3);
+}
+
+.fragment-card__hero {
+  padding: 22px 16px 20px;
+  text-align: center;
+  position: relative;
+}
+
+.fragment-card__hero--aurora { background: linear-gradient(160deg, #0f172a, #4c1d95 70%, #0891b2); }
+.fragment-card__hero--neon { background: linear-gradient(160deg, #0a0a12, #1e1b4b 60%, #7c3aed); }
+.fragment-card__hero--ruby { background: linear-gradient(160deg, #1a0a0f, #881337 60%, #be123c); }
+.fragment-card__hero--gold { background: linear-gradient(160deg, #1a1408, #78350f 60%, #f59e0b); }
+.fragment-card__hero--ice { background: linear-gradient(160deg, #0c1929, #0c4a6e 60%, #38bdf8); }
+.fragment-card__hero--pixel { background: linear-gradient(160deg, #0a1a0a, #14532d 60%, #22d3ee); }
+.fragment-card__hero--silver { background: linear-gradient(160deg, #1e293b, #475569); }
+.fragment-card__hero--bronze { background: linear-gradient(160deg, #1c1410, #7c2d12); }
+.fragment-card__hero--mint { background: linear-gradient(160deg, #052e16, #065f46); }
+.fragment-card__hero--dim { background: linear-gradient(160deg, #18181b, #3f3f46); }
+
+.fragment-card__handle {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+  line-height: 1.25;
+  word-break: break-word;
+}
+
+.fragment-card__handle .collectible-username {
+  -webkit-text-fill-color: transparent;
+  font-size: 1.5rem;
+}
+
+.fragment-card__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: color-mix(in srgb, #fff 15%, transparent);
+  color: #fff;
+  backdrop-filter: blur(8px);
+}
+
+.fragment-card__badge .material-symbols-rounded {
+  font-size: 16px;
+  font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 20;
+}
+
+.fragment-card__body {
+  padding: 16px 18px 20px;
+}
+
+.fragment-card__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.fragment-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.875rem;
+}
+
+.fragment-row__label {
+  color: var(--md-sys-color-on-surface-variant);
+  flex-shrink: 0;
+}
+
+.fragment-row__value {
+  font-weight: 600;
+  text-align: right;
+}
+
+.fragment-row__value--ruby {
+  color: #db2777;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.fragment-row__value--ruby .material-symbols-rounded {
+  font-size: 16px;
+  font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 20;
+}
+
+.fragment-card__owner {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid color-mix(in srgb, var(--md-sys-color-outline-variant) 35%, transparent);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.875rem;
+}
+
+.fragment-card__owner-avatar {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fragment-card__owner-avatar .avatar {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  font-size: 0.9375rem;
+}
+
+.fragment-card__owner-info {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+}
+
+.fragment-card__owner-name {
+  font-weight: 600;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fragment-card__owner-handle {
+  font-size: 0.8125rem;
+  color: var(--md-sys-color-on-surface-variant);
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fragment-card__actions {
+  margin-top: 16px;
+  padding-top: 4px;
+}
+
+.fragment-card__buy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 12px;
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  cursor: pointer;
+}
+
+.fragment-card__buy .material-symbols-rounded {
+  font-size: 20px;
+  font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+}
+
+.fragment-card__buy:active {
+  opacity: 0.9;
+}
+
+.inventory-item__meta-link {
+  color: var(--md-sys-color-primary);
+  font-size: 0.75rem;
+  margin-top: 4px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  font: inherit;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}

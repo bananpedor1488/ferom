@@ -1,0 +1,283 @@
+/* Модалка статуса аккаунта: бан, заморозка, смена username */
+.account-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 12000;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.28s ease, visibility 0.28s ease;
+}
+
+.account-modal.is-open {
+  pointer-events: auto;
+  opacity: 1;
+  visibility: visible;
+}
+
+.account-modal[hidden] {
+  display: none !important;
+}
+
+.account-modal:not([hidden]) {
+  display: grid;
+}
+
+.account-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--md-sys-color-scrim) 72%, transparent);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  opacity: 0;
+  transition: opacity 0.32s ease;
+}
+
+.account-modal.is-open .account-modal__backdrop {
+  opacity: 1;
+}
+
+.account-modal__dialog {
+  position: relative;
+  width: min(100%, 380px);
+  padding: 28px 24px 22px;
+  border-radius: 28px;
+  text-align: center;
+  background: var(--md-sys-color-surface-container-high);
+  color: var(--md-sys-color-on-surface);
+  box-shadow:
+    0 12px 40px color-mix(in srgb, var(--md-sys-color-shadow) 28%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--md-sys-color-outline-variant) 40%, transparent);
+  transform: translateY(18px) scale(0.94);
+  opacity: 0;
+  transition:
+    transform 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.32s ease;
+}
+
+.account-modal.is-open .account-modal__dialog {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.account-modal__glow {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  width: 180px;
+  height: 180px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  filter: blur(36px);
+  opacity: 0.55;
+  pointer-events: none;
+  animation: account-modal-glow 3.2s ease-in-out infinite;
+}
+
+.account-modal--banned {
+  --account-accent: var(--md-sys-color-error);
+  --account-accent-container: var(--md-sys-color-error-container);
+  --account-on-accent: var(--md-sys-color-on-error);
+  --account-on-container: var(--md-sys-color-on-error-container);
+}
+
+.account-modal--frozen {
+  --account-accent: #0288d1;
+  --account-accent-container: color-mix(in srgb, #0288d1 18%, var(--md-sys-color-surface-container-high));
+  --account-on-accent: #fff;
+  --account-on-container: #01579b;
+}
+
+.account-modal--username {
+  --account-accent: var(--md-sys-color-primary);
+  --account-accent-container: var(--md-sys-color-primary-container);
+  --account-on-accent: var(--md-sys-color-on-primary);
+  --account-on-container: var(--md-sys-color-on-primary-container);
+}
+
+.account-modal--password {
+  --account-accent: #2e7d32;
+  --account-accent-container: color-mix(in srgb, #2e7d32 16%, var(--md-sys-color-surface-container-high));
+  --account-on-accent: #fff;
+  --account-on-container: #1b5e20;
+}
+
+.account-modal--session {
+  --account-accent: var(--md-sys-color-tertiary);
+  --account-accent-container: var(--md-sys-color-tertiary-container);
+  --account-on-accent: var(--md-sys-color-on-tertiary);
+  --account-on-container: var(--md-sys-color-on-tertiary-container);
+}
+
+.account-modal--password-help {
+  --account-accent: var(--md-sys-color-primary);
+  --account-accent-container: var(--md-sys-color-primary-container);
+  --account-on-accent: var(--md-sys-color-on-primary);
+  --account-on-container: var(--md-sys-color-on-primary-container);
+}
+
+.account-modal__steps {
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+  counter-reset: account-step;
+}
+
+.account-modal__steps li {
+  position: relative;
+  margin: 0;
+  padding: 10px 12px 10px 40px;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--md-sys-color-on-surface);
+  background: color-mix(in srgb, var(--account-accent-container) 45%, transparent);
+}
+
+.account-modal__steps li + li {
+  margin-top: 8px;
+}
+
+.account-modal__steps li::before {
+  counter-increment: account-step;
+  content: counter(account-step);
+  position: absolute;
+  left: 12px;
+  top: 10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--account-on-accent);
+  background: var(--account-accent);
+}
+
+.account-modal__glow {
+  background: var(--account-accent);
+}
+
+.account-modal__icon-ring {
+  position: relative;
+  z-index: 1;
+  width: 76px;
+  height: 76px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--account-accent-container);
+  color: var(--account-on-container);
+  animation: account-modal-pop 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.08s both;
+}
+
+.account-modal__icon-ring::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: inherit;
+  border: 2px solid color-mix(in srgb, var(--account-accent) 35%, transparent);
+  animation: account-modal-ring 2.4s ease-out infinite;
+}
+
+.account-modal__icon {
+  font-size: 36px;
+  font-variation-settings: 'FILL' 1, 'wght' 500;
+}
+
+.account-modal--banned .account-modal__dialog {
+  animation: account-modal-shake 0.55s ease 0.15s;
+}
+
+.account-modal__title {
+  margin: 0 0 10px;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.account-modal__desc {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.account-modal__reason {
+  margin: 14px 0 0;
+  padding: 12px 14px;
+  border-radius: 14px;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  text-align: left;
+  background: color-mix(in srgb, var(--account-accent-container) 72%, transparent);
+  color: var(--account-on-container);
+  border: 1px solid color-mix(in srgb, var(--account-accent) 22%, transparent);
+}
+
+.account-modal__btn {
+  margin-top: 22px;
+  width: 100%;
+  min-height: 48px;
+  padding: 0 20px;
+  border: none;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--account-on-accent);
+  background: var(--account-accent);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--account-accent) 36%, transparent);
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.account-modal__btn:hover {
+  filter: brightness(1.05);
+}
+
+.account-modal__btn:active {
+  transform: scale(0.98);
+}
+
+@keyframes account-modal-pop {
+  0% { transform: scale(0.55); opacity: 0; }
+  70% { transform: scale(1.06); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes account-modal-ring {
+  0% { transform: scale(0.92); opacity: 0.75; }
+  100% { transform: scale(1.18); opacity: 0; }
+}
+
+@keyframes account-modal-glow {
+  0%, 100% { opacity: 0.4; transform: translateX(-50%) scale(1); }
+  50% { opacity: 0.65; transform: translateX(-50%) scale(1.08); }
+}
+
+@keyframes account-modal-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-5px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(3px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .account-modal,
+  .account-modal__backdrop,
+  .account-modal__dialog,
+  .account-modal__icon-ring,
+  .account-modal__glow {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}

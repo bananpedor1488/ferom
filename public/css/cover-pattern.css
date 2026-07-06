@@ -1,0 +1,111 @@
+/**
+ * Ferom — фоновый паттерн Material Symbols (Telegram-style)
+ */
+
+.cover-bg,
+.profile-hero__bg,
+.tg-profile-header__bg,
+.wallet-hero,
+.desktop-chat-empty--pattern {
+  isolation: isolate;
+}
+
+.cover-icon-pattern {
+  position: absolute;
+  inset: -6% -4%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.96) 0%,
+    rgba(0, 0, 0, 0.78) 70%,
+    rgba(0, 0, 0, 0.35) 100%
+  );
+}
+
+.cover-icon-pattern--profile-header,
+.cover-icon-pattern--profile-hero {
+  inset: -8% -6%;
+}
+
+.cover-icon-pattern--profile-header {
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.94) 0%,
+    rgba(0, 0, 0, 0.72) 60%,
+    rgba(0, 0, 0, 0.28) 100%
+  );
+}
+
+.tg-profile-header__bg .cover-icon-pattern,
+.profile-hero__bg .cover-icon-pattern {
+  inset: 0;
+}
+
+.wallet-hero .cover-icon-pattern {
+  inset: -15% -8%;
+  mask-image: radial-gradient(
+    ellipse at 50% 40%,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.55) 72%,
+    rgba(0, 0, 0, 0.2) 100%
+  );
+}
+
+.cover-icon-pattern__icon {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  font-size: var(--size);
+  line-height: 1;
+  color: #fff;
+  opacity: var(--opacity);
+  transform: translate(-50%, -50%) rotate(var(--rotate));
+  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 48;
+  user-select: none;
+  -webkit-user-select: none;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.08));
+}
+
+.cover-icon-pattern__icon--filled {
+  font-variation-settings: 'FILL' 1, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+  opacity: calc(var(--opacity) * 1.15);
+}
+
+.cover-icon-pattern--wallet .cover-icon-pattern__icon {
+  font-variation-settings: 'FILL' 0, 'wght' 350, 'GRAD' 0, 'opsz' 24;
+}
+
+.cover-icon-pattern--desktop {
+  inset: 0;
+  mask-image: none;
+}
+
+.cover-icon-pattern--desktop .cover-icon-pattern__icon {
+  color: var(--md-sys-color-primary);
+  opacity: var(--opacity);
+  filter: none;
+}
+
+.desktop-chat-empty--pattern {
+  position: relative;
+  overflow: hidden;
+}
+
+.profile-hero__bg::after,
+.tg-profile-header__bg::after {
+  z-index: 1;
+}
+
+.profile-hero__content,
+.profile-hero__edit,
+.tg-profile-header__back,
+.tg-profile-header__main {
+  z-index: 2;
+}
+
+.wallet-hero > :not(.cover-icon-pattern) {
+  position: relative;
+  z-index: 1;
+}

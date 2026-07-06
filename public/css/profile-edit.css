@@ -1,0 +1,333 @@
+/**
+ * Ferom — редактирование профиля (стиль Telegram)
+ */
+
+.tg-edit-screen {
+  background: var(--md-sys-color-surface-container-lowest);
+}
+
+#screen-profile-edit.active {
+  display: flex !important;
+  flex-direction: column;
+  min-height: 100dvh;
+  overflow: hidden;
+}
+
+.tg-edit-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 8px 0 24px;
+}
+
+/* top-bar__text-btn — в app.css */
+/* ─── Аватар ─── */
+.tg-edit-avatar-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 28px 16px 20px;
+  gap: 12px;
+}
+
+.tg-edit-avatar-btn {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  padding: 0;
+  border: none;
+  background: var(--md-sys-color-surface-container-high);
+  box-shadow: var(--md-sys-elevation-2);
+  position: relative;
+}
+
+.tg-edit-avatar-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tg-edit-avatar-btn__placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-weight: 500;
+  color: var(--md-sys-color-on-primary-container);
+  background: var(--md-sys-color-primary-container);
+}
+
+.tg-edit-avatar-action {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--md-sys-color-primary);
+  padding: 8px 16px;
+  border-radius: var(--md-sys-shape-corner-full);
+}
+
+.tg-edit-avatar-action:active {
+  background: color-mix(in srgb, var(--md-sys-color-primary) 10%, transparent);
+}
+
+/* ─── Карточки полей ─── */
+.tg-edit-card {
+  margin: 0 16px 8px;
+  background: var(--md-sys-color-surface);
+  border-radius: var(--md-sys-shape-corner-large);
+  overflow: hidden;
+  box-shadow: var(--md-sys-elevation-1);
+}
+
+.tg-field {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 14px 16px;
+  border-bottom: 1px solid color-mix(in srgb, var(--md-sys-color-outline-variant) 45%, transparent);
+  min-height: 52px;
+}
+
+.tg-field:last-child,
+.tg-field--last {
+  border-bottom: none;
+}
+
+.tg-field__label {
+  width: 100px;
+  flex-shrink: 0;
+  font-size: 1rem;
+  color: var(--md-sys-color-primary);
+  padding-top: 2px;
+  line-height: 1.4;
+}
+
+.tg-field__input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font: inherit;
+  font-size: 1rem;
+  color: var(--md-sys-color-on-surface);
+  outline: none;
+  min-width: 0;
+  padding: 0;
+  line-height: 1.4;
+}
+
+.tg-field__input::placeholder {
+  color: var(--md-sys-color-on-surface-variant);
+  opacity: 0.7;
+}
+
+.tg-field__textarea {
+  resize: none;
+  min-height: 44px;
+  field-sizing: content;
+}
+
+.tg-field--readonly {
+  align-items: center;
+}
+
+.tg-field--readonly .tg-field__label {
+  padding-top: 0;
+}
+
+.tg-field__value {
+  flex: 1;
+  font-size: 1rem;
+  color: var(--md-sys-color-on-surface);
+  word-break: break-all;
+}
+
+.tg-field__value--muted {
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.tg-edit-hint {
+  margin: 4px 16px 16px;
+  font-size: 0.8125rem;
+  color: var(--md-sys-color-on-surface-variant);
+  line-height: 1.45;
+}
+
+.tg-edit-hint--warn {
+  color: var(--md-sys-color-error);
+}
+
+.tg-edit-error {
+  margin: 0 16px 12px;
+  padding: 12px 14px;
+  border-radius: var(--md-sys-shape-corner-medium);
+  background: var(--md-sys-color-error-container);
+  color: var(--md-sys-color-on-error-container);
+  font-size: 0.875rem;
+}
+
+/* ─── Action Sheet (как в TG) ─── */
+.action-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.action-sheet.is-open {
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.action-sheet__backdrop {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, #000 42%, transparent);
+  opacity: 0;
+  transition: opacity 0.28s ease;
+}
+
+.action-sheet.is-open .action-sheet__backdrop {
+  opacity: 1;
+}
+
+.action-sheet__stack {
+  position: relative;
+  z-index: 1;
+  width: calc(100% - 16px);
+  max-width: calc(var(--app-max-width) - 16px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+  transform: translateY(100%);
+  transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.action-sheet.is-open .action-sheet__stack {
+  transform: translateY(0);
+}
+
+/* Единая поверхность для панели и «Отмена» */
+.action-sheet__panel,
+.action-sheet__cancel {
+  width: 100%;
+  background: var(--md-sys-color-surface-container-high);
+  border: none;
+  border-radius: var(--md-sys-shape-corner-extra-large);
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--md-sys-color-shadow) 14%, transparent);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.action-sheet__panel.glass,
+.action-sheet__cancel.glass {
+  background: var(--md-sys-color-surface-container-high);
+  border: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.action-sheet__panel {
+  overflow: hidden;
+  padding: 4px 16px 16px;
+}
+
+.action-sheet__title {
+  text-align: center;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--md-sys-color-on-surface-variant);
+  padding: 12px 0 10px;
+  margin: 0;
+}
+
+.action-sheet__btn {
+  display: block;
+  width: calc(100% + 32px);
+  margin-left: -16px;
+  margin-right: -16px;
+  padding: 16px;
+  font-size: 1.0625rem;
+  text-align: center;
+  color: var(--md-sys-color-primary);
+  background: transparent;
+  border: none;
+  border-top: 1px solid color-mix(in srgb, var(--md-sys-color-outline-variant) 28%, transparent);
+}
+
+.action-sheet__btn:first-of-type {
+  border-top: none;
+}
+
+.action-sheet__btn--destructive {
+  color: var(--md-sys-color-error);
+}
+
+.action-sheet__btn:active {
+  background: color-mix(in srgb, var(--md-sys-color-on-surface) 6%, transparent);
+}
+
+.action-sheet__cancel {
+  display: block;
+  padding: 16px;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  text-align: center;
+  color: var(--md-sys-color-primary);
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.action-sheet__cancel:active {
+  background: color-mix(in srgb, var(--md-sys-color-on-surface) 6%, transparent);
+  transform: scale(0.99);
+}
+
+body.sheet-open {
+  overflow: hidden;
+}
+
+/* Пресеты в sheet */
+.presets-sheet-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  padding: 8px 16px 16px;
+}
+
+.presets-sheet-grid button {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  overflow: hidden;
+  padding: 0;
+  border: 3px solid transparent;
+  transition: border-color 0.2s, transform 0.15s;
+}
+
+.presets-sheet-grid button.selected {
+  border-color: var(--md-sys-color-primary);
+  transform: scale(1.05);
+}
+
+.presets-sheet-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Профиль: bio в hero */
+.profile-hero__bio {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: 6px;
+  max-width: 280px;
+  line-height: 1.4;
+  text-align: center;
+}

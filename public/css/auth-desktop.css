@@ -1,0 +1,246 @@
+/**
+ * Ferom — десктопная версия экранов входа / регистрации (на весь экран)
+ */
+
+.auth-desktop {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.auth-desktop__hero {
+  display: none;
+}
+
+.auth-desktop__panel {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.auth-screen__brand--mobile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ─── Desktop: полноэкранный split-layout ─── */
+@media (min-width: 1024px) {
+  /* Снять «мобильную рамку» 430px с body/#app на экранах входа */
+  body:has(#screen-login.active),
+  body:has(#screen-register.active),
+  body:has(#screen-email-verify.active) {
+    display: block;
+    background: var(--md-sys-color-surface);
+  }
+
+  body:has(#screen-login.active) #app,
+  body:has(#screen-register.active) #app,
+  body:has(#screen-email-verify.active) #app {
+    max-width: none;
+    width: 100%;
+    margin: 0;
+    min-height: 100dvh;
+    height: 100dvh;
+    border: none;
+    box-shadow: none;
+    overflow: hidden;
+  }
+
+  body:has(#screen-login.active) .desktop-shell,
+  body:has(#screen-register.active) .desktop-shell,
+  body:has(#screen-email-verify.active) .desktop-shell,
+  body:has(#screen-login.active) .desktop-workspace,
+  body:has(#screen-email-verify.active) .desktop-workspace {
+    width: 100%;
+    height: 100dvh;
+    min-height: 100dvh;
+  }
+
+  #screen-login.auth-screen,
+  #screen-register.auth-screen,
+  #screen-email-verify.auth-screen {
+    padding: 0;
+    justify-content: stretch;
+    align-items: stretch;
+    background: var(--md-sys-color-surface);
+    min-height: 100dvh;
+    height: 100dvh;
+    max-width: none;
+    width: 100%;
+  }
+
+  .auth-desktop {
+    max-width: none;
+    width: 100%;
+    height: 100%;
+    min-height: 100dvh;
+    flex-direction: row;
+    align-items: stretch;
+    margin: 0;
+  }
+
+  .auth-desktop__hero {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 20%, color-mix(in srgb, var(--md-sys-color-primary) 35%, transparent), transparent),
+      radial-gradient(ellipse 60% 50% at 80% 80%, color-mix(in srgb, var(--md-sys-color-tertiary) 30%, transparent), transparent),
+      linear-gradient(145deg, var(--md-sys-color-surface-container-low) 0%, var(--md-sys-color-surface) 100%);
+    padding: 48px 56px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .auth-desktop__hero-inner {
+    max-width: 480px;
+  }
+
+  .auth-desktop__logo {
+    width: 72px;
+    height: 72px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, var(--md-sys-color-primary), var(--md-sys-color-tertiary));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 28px;
+    box-shadow: var(--md-sys-elevation-2);
+  }
+
+  .auth-desktop__logo .material-symbols-rounded {
+    font-size: 36px;
+    color: var(--md-sys-color-on-primary);
+    font-variation-settings: 'FILL' 1;
+  }
+
+  .auth-desktop__hero-title {
+    font-size: 2.5rem;
+    font-weight: 500;
+    letter-spacing: -0.5px;
+    margin-bottom: 14px;
+    color: var(--md-sys-color-on-surface);
+  }
+
+  .auth-desktop__hero-text {
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    color: var(--md-sys-color-on-surface-variant);
+    margin-bottom: 32px;
+  }
+
+  .auth-desktop__features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .auth-desktop__features li {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 1rem;
+    color: var(--md-sys-color-on-surface);
+  }
+
+  .auth-desktop__features .material-symbols-rounded {
+    font-size: 24px;
+    color: var(--md-sys-color-primary);
+    font-variation-settings: 'FILL' 1;
+  }
+
+  .auth-desktop__panel {
+    flex: 0 0 min(520px, 44vw);
+    max-width: 560px;
+    justify-content: center;
+    align-items: center;
+    padding: 48px 56px;
+    background: var(--md-sys-color-surface);
+    border-left: 1px solid var(--md-sys-color-outline-variant);
+    box-shadow: -12px 0 48px color-mix(in srgb, var(--md-sys-color-shadow) 6%, transparent);
+    overflow-y: auto;
+  }
+
+  .auth-screen__brand--mobile {
+    display: none;
+  }
+
+  .auth-form {
+    width: 100%;
+    max-width: 380px;
+  }
+
+  .auth-form .form-field__input {
+    padding: 14px 16px;
+    font-size: 1rem;
+    border-radius: 14px;
+  }
+
+  .auth-form .btn--primary {
+    padding: 14px 24px;
+    font-size: 1rem;
+    border-radius: 28px;
+    width: 100%;
+  }
+
+  .auth-switch {
+    margin-top: 2rem;
+    width: 100%;
+    max-width: 380px;
+    text-align: center;
+  }
+}
+
+@media (min-width: 1400px) {
+  .auth-desktop__panel {
+    flex-basis: 560px;
+    padding: 64px 72px;
+  }
+
+  .auth-desktop__hero-inner {
+    max-width: 520px;
+  }
+}
+
+/* desktop-mode (после initDesktop) — те же правила */
+@media (min-width: 1024px) {
+  body.desktop-mode #screen-login.auth-screen,
+  body.desktop-mode #screen-register.auth-screen,
+  body.desktop-mode #screen-email-verify.auth-screen {
+    padding: 0;
+    justify-content: stretch;
+    align-items: stretch;
+    min-height: 100dvh;
+    height: 100dvh;
+  }
+
+  body.desktop-mode .auth-desktop {
+    max-width: none;
+    width: 100%;
+    height: 100%;
+    min-height: 100dvh;
+    flex-direction: row;
+    margin: 0;
+  }
+
+  body.desktop-mode .auth-desktop__hero {
+    display: flex;
+  }
+
+  body.desktop-mode .auth-screen__brand--mobile {
+    display: none;
+  }
+
+  body.desktop-mode .auth-desktop__panel {
+    flex: 0 0 min(520px, 44vw);
+    border-left: 1px solid var(--md-sys-color-outline-variant);
+  }
+}

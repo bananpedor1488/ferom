@@ -1,0 +1,112 @@
+/* Конфиденциальность — экран настроек в стиле Telegram */
+
+.privacy-page {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 32px;
+}
+
+.privacy-account-value {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.9375rem;
+  color: var(--md-sys-color-on-surface);
+  overflow: visible;
+  white-space: normal;
+}
+
+.privacy-footnote {
+  margin: 12px 20px 0;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.settings-row--toggle {
+  text-align: left;
+}
+
+.settings-row--toggle .settings-row__body {
+  padding-right: 8px;
+}
+
+.settings-toggle {
+  position: relative;
+  width: 46px;
+  height: 28px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--md-sys-color-on-surface-variant) 28%, transparent);
+  flex-shrink: 0;
+  transition: background 0.2s ease;
+}
+
+.settings-toggle__knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.22);
+  transition: transform 0.2s ease;
+}
+
+.settings-toggle.is-on {
+  background: var(--md-sys-color-primary);
+}
+
+.settings-toggle.is-on .settings-toggle__knob {
+  transform: translateX(18px);
+}
+
+.privacy-picker-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 16px;
+  border: none;
+  background: none;
+  font: inherit;
+  color: var(--md-sys-color-on-surface);
+  text-align: left;
+  cursor: pointer;
+}
+
+.privacy-picker-option + .privacy-picker-option {
+  border-top: 1px solid color-mix(in srgb, var(--md-sys-color-outline-variant) 35%, transparent);
+}
+
+.privacy-picker-option:active {
+  background: color-mix(in srgb, var(--md-sys-color-on-surface) 6%, transparent);
+}
+
+.privacy-picker-option__label {
+  font-size: 1rem;
+}
+
+.privacy-picker-option__check {
+  font-size: 1.25rem;
+  color: var(--md-sys-color-primary);
+  opacity: 0;
+}
+
+.privacy-picker-option.is-selected .privacy-picker-option__check {
+  opacity: 1;
+}
+
+.privacy-picker-option__desc {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.8125rem;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.settings-row__value--privacy {
+  font-size: 0.8125rem;
+  color: var(--md-sys-color-primary);
+  font-weight: 500;
+}
